@@ -7,6 +7,20 @@ Meant for indentation-based languages. Quickly tested on python.
 
 Warning: horrible and rough implementation !
 
+Example:
+
+#+BEGIN_SRC python
+def foo(): # <- point on this line, call M-x tree-promote
+    pass
+print
+#+END_SRC
+you get
+#+BEGIN_SRC python
+    def foo():
+        pass
+print
+#+END_SRC
+
 ** Usage
 
 Evaluate the buffer and call
