@@ -1,0 +1,26 @@
+* Tree-promote
+
+Promote and demote a tree for  quick and easy code manipulation. Think
+org-mode, but for code.
+
+Meant for indentation-based languages. Quickly tested on python.
+
+Warning: horrible and rough implementation !
+
+** Usage
+
+Evaluate the buffer and call
+: M-x tree-promote
+
+** Implementation
+
+- let "beg" be the first point of the current line
+- find the next line that starts with the same indentation
+- let "end" be the first point of that sibling
+- indent the region between "beg" and "end".
+
+** See also
+
+I took some utilities functions of mine on [[https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el][yaml-utils]].
+
+See `move-text` in melpa to move regions up and down.
