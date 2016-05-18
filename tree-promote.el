@@ -1,13 +1,11 @@
-;; indent-promote.el
+;; tree-promote.el
 
 ;; Promote (and demote) a tree for code editing (think org-mode).
 ;;
-;; This snippet is meant for indentation-based languages. Tested quickly with python.
+;; This snippet is meant for indentation-based languages.
 
 
 ;; As an answer to https://www.reddit.com/r/emacs/comments/4jb8dj/orgmodelike_promotedemote_tree_for_editing/
-
-;; yaml-utils: https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el
 
 (defun current-line ()
   "returns the current line."
@@ -23,21 +21,6 @@
   (car (car (s-match-strings-all "^\s+" (current-line)) ) )
   )
 
-
-(defun my-yaml-next-sibling ()
-  "Goes to the next element of the same level (defined by the current line indentation)."
-  (interactive)
-  (end-of-line)
-  (setq my-yaml-element-regexp "\"?[a-zA-Z0-9]")
-  (or (search-forward-regexp (concat "^"
-                                 (current-line-indentation)
-                                 my-yaml-element-regexp)
-                         nil ; don't bound the search
-                         t ; if search fails just return nil, no error
-                         )
-      (goto-char (point-max)))
-  (beginning-of-line-text))
-
 (defun my-indent (reg-beg reg-end)
   "Indent a region with spaces (should be replaced with a
    built-in one, but I observed evil's is buggy in some modes, like
@@ -46,15 +29,43 @@
   (save-excursion
     (replace-regexp "^" "    " nil reg-beg reg-end)))
 
-(defun my-tree-promote ()
+(defun tree-promote-goto-end-of-tree ()
+  "Go to the end of the indented tree."
+  (interactive)
+  (let ((line-move-visual t))
+    (beginning-of-line-text)
+    (next-line)
+    (while (string-equal (char-to-string (following-char)) " ")
+      (next-line))
+    (end-of-line)
+    ))
+
+(defun tree-promote-end-of-tree-point ()
+  "Get the point of the end of the indentend tree."
+  (save-excursion
+    (tree-promote-goto-end-of-tree)
+    (point)))
+
+(defun tree-promote (&optional select)
+;; (defun tree-promote (select)
   "Indent the current tree (based on indentation)."
-         (interactive)
-         (let (( beg (save-excursion
-                       (beginning-of-line-text) (point)))
-               ( end (save-excursion
-                       (my-yaml-next-sibling)
-                       (previous-line)
-                       (point)))
-               )
-           (my-indent beg end)
-         ))
+    ;; (interactive "P")
+    (interactive)
+    (let ((beg (save-excursion
+                (beginning-of-line) (point)))
+        (end (tree-promote-end-of-tree-point)
+        ))
+    (if select
+          (call-interactively 'indent-rigidly (vector beg end))
+        (indent-rigidly beg end 2))
+      ;; (my-indent beg end))
+      ))
+
+(defun tree-promote-interactive ()
+  "Set the indentation yourself with the arrow keys."
+  ;; that's what M-x indent-rigidly without arg does.
+  ;; TO FIX
+  (interactive)
+  (tree-promote t))
+
+(global-set-key (kbd "C-c >") 'tree-promote) ;; overrides in python-mode that only indent the current line

@@ -3,9 +3,9 @@
 Promote and demote a tree for  quick and easy code manipulation. Think
 org-mode, but for code.
 
-Meant for indentation-based languages. Quickly tested on python.
+Meant for indentation-based languages.
 
-Warning: horrible and rough implementation !
+Warning: horrible and rough implementation, but yet super great !
 
 Example:
 
@@ -26,15 +26,27 @@ print
 Evaluate the buffer and call
 : M-x tree-promote
 
+Shortcut put at =C-c >=.
+
+Incoming: select the indentation yourself (as does =M-x indent-rigidly=).
+
 ** Implementation
 
 - let "beg" be the first point of the current line
-- find the next line that starts with the same indentation
-- let "end" be the first point of that sibling
+- press the down arrow until we find a non-blank character
+- let "end" be the last point of that line
 - indent the region between "beg" and "end".
 
-** See also
+** Ideas, todos
 
-I took some utilities functions of mine on [[https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el][yaml-utils]].
+Demote.
+
+Indent according to mode.
+
+Do something with the default  behaviour of =M-x indent-rigidly= which
+lets us indent interactively. Would be useful for jade templates.
+
+See if  the utilities functions  of mine  on [[https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el][yaml-utils]] can  be useful
+(indent all siblings at once ?).
 
 See `move-text` in melpa to move regions up and down.
