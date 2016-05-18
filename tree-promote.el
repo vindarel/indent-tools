@@ -68,4 +68,12 @@
   (interactive)
   (tree-promote t))
 
+(defun tree-promote-comment ()
+  (interactive)
+  (let ((beg (save-excursion
+               (beginning-of-line-text)
+               (point)))
+        (end (tree-promote-end-of-tree-point)))
+    (comment-region beg end)))
+
 (global-set-key (kbd "C-c >") 'tree-promote) ;; overrides in python-mode that only indent the current line

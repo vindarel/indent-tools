@@ -30,6 +30,10 @@ Shortcut put at =C-c >=.
 
 Incoming: select the indentation yourself (as does =M-x indent-rigidly=).
 
+*** Comment the tree
+
+=tree-promote-comment=
+
 ** Implementation
 
 - let "beg" be the first point of the current line
