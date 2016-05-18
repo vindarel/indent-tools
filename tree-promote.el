@@ -18,8 +18,7 @@
 (defun current-line-indentation ()
   "returns the str of the current indentation (spaces)."
   ;; https://github.com/magnars/s.el#s-match-strings-all-regex-string
-  (car (car (s-match-strings-all "^\s+" (current-line)) ) )
-  )
+  (car (car (s-match-strings-all "^\s+" (current-line)) ) ))
 
 (defun my-indent (reg-beg reg-end)
   "Indent a region with spaces (should be replaced with a
@@ -29,14 +28,19 @@
   (save-excursion
     (replace-regexp "^" "    " nil reg-beg reg-end)))
 
+(defun my-blank-line ()
+  (equal (line-beginning-position) (line-end-position)))
+
 (defun tree-promote-goto-end-of-tree ()
   "Go to the end of the indented tree."
   (interactive)
-  (let ((line-move-visual t))
+  (let ((goal-column (length (current-line-indentation)))) ;; see next-line doc
     (beginning-of-line-text)
     (next-line)
-    (while (string-equal (char-to-string (following-char)) " ")
+    (while (or  (my-blank-line)
+                (string-equal (char-to-string (following-char)) " "))
       (next-line))
+    (previous-line)
     (end-of-line)
     ))
 
@@ -53,8 +57,7 @@
     (interactive)
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
-        (end (tree-promote-end-of-tree-point)
-        ))
+        (end (tree-promote-end-of-tree-point)))
     (if select
           (call-interactively 'indent-rigidly (vector beg end))
         (indent-rigidly beg end 2))
