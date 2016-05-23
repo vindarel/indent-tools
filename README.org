@@ -28,6 +28,15 @@ Evaluate the buffer and call
 
 Shortcut put at =C-c >=.
 
+Delete the tree:
+: M-x tree-promote-delete
+
+Comment it:
+: M-x tree-promote-comment
+
+Call the hydra to see all choices:
+: M-x tree-promote-hydra
+
 Incoming: select the indentation yourself (as does =M-x indent-rigidly=).
 
 *** Comment the tree
