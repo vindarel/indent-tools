@@ -96,7 +96,7 @@
         (end (tree-promote-end-of-tree-point)))
     (delete-region beg end)))
 
-(defhydra tree-promote-hydra (:color red :columns 1)
+(defhydra tree-promote-hydra (:color blue :columns 1)
   "tree promote"
   (">" (tree-promote) "Indent")
   ("c" (tree-promote-comment) "Comment")
