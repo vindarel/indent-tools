@@ -31,16 +31,24 @@
 (defun my-blank-line ()
   (equal (line-beginning-position) (line-end-position)))
 
+(defun tree-promote--on-last-line ()
+  (equal (line-number-at-pos) (count-lines (point-min) (point-max))))
+
 (defun tree-promote-goto-end-of-tree ()
   "Go to the end of the indented tree."
   (interactive)
-  (let ((goal-column (length (current-line-indentation)))) ;; see next-line doc
+  (let ((goal-column (length (current-line-indentation)))
+        (last-line-reached nil)) ;; see next-line doc
     (beginning-of-line-text)
     (next-line)
-    (while (or  (my-blank-line)
-                (string-equal (char-to-string (following-char)) " "))
-      (next-line))
-    (previous-line)
+    (while (and (not last-line-reached)
+                (or
+                 (my-blank-line)
+                 (string-equal (char-to-string (following-char)) " ")))
+      (if (tree-promote--on-last-line)
+          (setq last-line-reached t)
+        (next-line)))
+    (unless last-line-reached (previous-line))
     (end-of-line)
     ))
 
