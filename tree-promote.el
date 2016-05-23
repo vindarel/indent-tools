@@ -87,4 +87,15 @@
                (point)))
         (end (tree-promote-end-of-tree-point)))
     (delete-region beg end)))
+
+(defhydra tree-promote-hydra (:color red :columns 1)
+  "tree promote"
+  (">" (tree-promote) "Indent")
+  ("c" (tree-promote-comment) "Comment")
+  ("d" (tree-promote-delete) "Delete")
+  )
+
+(defalias 'hydra-tree-promote 'tree-promote-hydra)
+
+
 (global-set-key (kbd "C-c >") 'tree-promote) ;; overrides in python-mode that only indent the current line
