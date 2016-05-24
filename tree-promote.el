@@ -102,6 +102,7 @@
   ("c" (tree-promote-comment) "Comment")
   ("d" (tree-promote-delete) "Delete")
   )
+  ("e" (tree-promote-goto-end-of-tree) "goto end of tree"))
 
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
 
