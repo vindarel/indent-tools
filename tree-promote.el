@@ -106,4 +106,4 @@
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
 
 
-(global-set-key (kbd "C-c >") 'tree-promote) ;; overrides in python-mode that only indent the current line
+(global-set-key (kbd "C-c >") 'tree-promote-hydra/body) ;; overrides in python-mode that only indent the current line
