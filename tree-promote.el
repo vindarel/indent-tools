@@ -65,12 +65,23 @@
     (interactive)
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
-        (end (tree-promote-end-of-tree-point)))
+          (end (tree-promote-end-of-tree-point))
+          (indentation-level 2))
     (if select
           (call-interactively 'indent-rigidly (vector beg end))
-        (indent-rigidly beg end 2))
+        (indent-rigidly beg end indentation-level))
       ;; (my-indent beg end))
       ))
+
+(defun tree-promote-demote ()
+  "de-indent the current indented tree"
+  ;; todo: factorize
+  (interactive)
+  (let ((beg (save-excursion
+               (beginning-of-line) (point)))
+        (end (tree-promote-end-of-tree-point))
+        (indentation-level -2))
+    (indent-rigidly beg end indentation-level)))
 
 (defun tree-promote-interactive ()
   "Set the indentation yourself with the arrow keys."
@@ -99,9 +110,9 @@
 (defhydra tree-promote-hydra (:color blue :columns 1)
   "tree promote"
   (">" (tree-promote) "Indent")
+  ("<" (tree-promote-demote) "De-indent")
   ("c" (tree-promote-comment) "Comment")
   ("d" (tree-promote-delete) "Delete")
-  )
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree"))
 
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
