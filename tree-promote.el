@@ -31,6 +31,34 @@
 (defun my-blank-line ()
   (equal (line-beginning-position) (line-end-position)))
 
+(defun buffer-mode (buffer-or-string)
+  "Returns the major mode associated with a buffer."
+  ;; thanks https://stackoverflow.com/questions/2238418/emacs-lisp-how-to-get-buffer-major-mode
+  (with-current-buffer buffer-or-string
+    major-mode))
+
+(defvar tree-promote-indent-offset 2 "default indentation offset")
+
+(defun tree-promote--indentation-offset ()
+  "Get the current mode's indentation offset."
+  (let ((current-mode (buffer-mode (current-buffer))))
+    (cond ((and (equal current-mode 'python-mode)
+                (boundp 'python-indent-offset)
+                (numberp python-indent-offset))
+           python-indent-offset)
+
+          ((and (equal current-mode 'jade-mode)
+                (boundp 'jade-tab-width)
+                (numberp jade-tab-width))
+           jade-tab-width)
+
+          ((and (equal current-mode 'yaml-mode)
+                (boundp 'yaml-indent-offset)
+                (numberp yaml-indent-offset))
+           yaml-indent-offset)
+
+          (t tree-promote-indent-offset))))
+
 (defun tree-promote--on-last-line ()
   (equal (line-number-at-pos) (count-lines (point-min) (point-max))))
 
@@ -66,12 +94,12 @@
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
           (end (tree-promote-end-of-tree-point))
-          (indentation-level 2))
+          (indentation-level (tree-promote--indentation-offset)))
     (if select
           (call-interactively 'indent-rigidly (vector beg end))
         (indent-rigidly beg end indentation-level))
       ;; (my-indent beg end))
-      ))
+    ))
 
 (defun tree-promote-demote ()
   "de-indent the current indented tree"
@@ -80,7 +108,7 @@
   (let ((beg (save-excursion
                (beginning-of-line) (point)))
         (end (tree-promote-end-of-tree-point))
-        (indentation-level -2))
+        (indentation-level (- (tree-promote--indentation-offset))))
     (indent-rigidly beg end indentation-level)))
 
 (defun tree-promote-interactive ()
