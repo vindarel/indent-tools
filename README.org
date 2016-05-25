@@ -28,6 +28,8 @@ Evaluate the buffer and call
 
 Shortcut put at =C-c >=.
 
+Demote: =M-x tree-promote-demote=
+
 Delete the tree:
 : M-x tree-promote-delete
 
@@ -39,27 +41,17 @@ Call the hydra to see all choices:
 
 Incoming: select the indentation yourself (as does =M-x indent-rigidly=).
 
-*** Comment the tree
-
-=tree-promote-comment=
-
-** Implementation
-
-- let "beg" be the first point of the current line
-- press the down arrow until we find a non-blank character
-- let "end" be the last point of that line
-- indent the region between "beg" and "end".
 
 ** Ideas, todos
 
-Demote.
+[X] Demote.
 
-Indent according to mode.
+[X] Indent according to mode. Done for python, yaml and jade.
 
-Do something with the default  behaviour of =M-x indent-rigidly= which
+[] Do something with the default  behaviour of =M-x indent-rigidly= which
 lets us indent interactively. Would be useful for jade templates.
 
-See if  the utilities functions  of mine  on [[https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el][yaml-utils]] can  be useful
-(indent all siblings at once ?).
+[] See if  the utilities functions  of mine  on [[https://gitlab.com/emacs-stuff/my-elisp/blob/master/yaml-utils.el][yaml-utils]] can  be useful
+(indent all siblings at once ? Move around siblings ?).
 
 See `move-text` in melpa to move regions up and down.
