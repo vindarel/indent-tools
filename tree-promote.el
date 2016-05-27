@@ -86,6 +86,20 @@
     (tree-promote-goto-end-of-tree)
     (point)))
 
+(defun tree-promote-select ()
+  "Select the tree (useful to visualize.
+   Also useful: highlight-indentation-current-column-mode"
+  ; use a red hydra to cancel effects instead ?
+  (interactive)
+  (let ((beg (save-excursion
+               (beginning-of-line-text) (point)))
+        (end (tree-promote-end-of-tree-point)))
+    (goto-char beg)
+    (push-mark)
+    (activate-mark)
+    (goto-char end)
+    ))
+
 (defun tree-promote (&optional select)
 ;; (defun tree-promote (select)
   "Indent the current tree (based on indentation)."
@@ -135,12 +149,13 @@
         (end (tree-promote-end-of-tree-point)))
     (delete-region beg end)))
 
-(defhydra tree-promote-hydra (:color blue :columns 1)
+(defhydra tree-promote-hydra (:color blue :columns 2)
   "tree promote"
   (">" (tree-promote) "Indent")
   ("<" (tree-promote-demote) "De-indent")
   ("c" (tree-promote-comment) "Comment")
   ("d" (tree-promote-delete) "Delete")
+  ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree"))
 
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
