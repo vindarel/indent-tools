@@ -114,6 +114,19 @@
         (indent-rigidly beg end indentation-level))
       ;; (my-indent beg end))
     ))
+(defun beginning-of-line-point ()
+  (save-excursion
+    (beginning-of-line)
+    (point)))
+
+(defun tree-promote-indent-space ()
+  "Indent with only a space (specially useful in jade-mode)."
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (tree-promote-end-of-tree-point))
+        (indentation-level (tree-promote--indentation-offset)))
+    (save-excursion
+      (replace-regexp "^" " " nil beg end))))
 
 (defun tree-promote-demote ()
   "de-indent the current indented tree"
@@ -156,7 +169,9 @@
   ("c" (tree-promote-comment) "Comment")
   ("d" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
-  ("e" (tree-promote-goto-end-of-tree) "goto end of tree"))
+  ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
+  ("<SPC>" (tree-promote-indent-space) "indent with a space")
+  )
 
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
 
