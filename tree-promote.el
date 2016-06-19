@@ -162,7 +162,7 @@
         (end (tree-promote-end-of-tree-point)))
     (delete-region beg end)))
 
-(defhydra tree-promote-hydra (:color blue :columns 2)
+(defhydra tree-promote-hydra (:color red :columns 2)
   "tree promote"
   (">" (tree-promote) "Indent")
   ("<" (tree-promote-demote) "De-indent")
