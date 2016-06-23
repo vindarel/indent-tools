@@ -40,8 +40,19 @@
 
 (defvar tree-promote-indent-offset 2 "default indentation offset")
 
+(defun beginning-of-line-point ()
+  (save-excursion
+    (beginning-of-line)
+    (point)))
+
+(defun tree-promote-end-of-tree-point ()
+  "Get the point of the end of the indentend tree."
+  (save-excursion
+    (tree-promote-goto-end-of-tree)
+    (point)))
+
 (defun tree-promote--indentation-offset ()
-  "Get the current mode's indentation offset."
+  "Get the current mode's indentation offset. Return an int (for python, it's usually 4)."
   (let ((current-mode (buffer-mode (current-buffer))))
     (cond ((and (equal current-mode 'python-mode)
                 (boundp 'python-indent-offset)
@@ -66,8 +77,8 @@
 (defun tree-promote-goto-end-of-tree ()
   "Go to the end of the indented tree."
   (interactive)
-  (let ((goal-column (length (current-line-indentation)))
-        (last-line-reached nil)) ;; see next-line doc
+  (let ((goal-column (length (current-line-indentation)))  ;; see next-line doc
+        (last-line-reached nil))
     (beginning-of-line-text)
     (next-line)
     (while (and (not last-line-reached)
@@ -127,10 +138,6 @@
         (setq end (point-max)))
     (indent-rigidly beg end indentation-level)
     ))
-(defun beginning-of-line-point ()
-  (save-excursion
-    (beginning-of-line)
-    (point)))
 
 (defun tree-promote-indent-space ()
   "Indent with only a space (specially useful in jade-mode)."
@@ -160,10 +167,10 @@
 
 (defun tree-promote-comment ()
   (interactive)
-  (let ((beg (save-excursion
-               (beginning-of-line-text)
-               (point)))
+  (let ((beg (beginning-of-line-point))
         (end (tree-promote-end-of-tree-point)))
+    (setq tree-promote--last-beg beg) ;; re-use to uncomment
+    (setq tree-promote--last-end end)
     (comment-region beg end)))
 
 (defun tree-promote-delete ()
