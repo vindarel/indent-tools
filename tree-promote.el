@@ -28,7 +28,8 @@
   (save-excursion
     (replace-regexp "^" "    " nil reg-beg reg-end)))
 
-(defun my-blank-line ()
+(defun my-blank-line-p ()
+  "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
 
 (defun buffer-mode (buffer-or-string)
@@ -71,7 +72,7 @@
     (next-line)
     (while (and (not last-line-reached)
                 (or
-                 (my-blank-line)
+                 (my-blank-line-p)
                  (string-equal (char-to-string (following-char)) " ")))
       (if (tree-promote--on-last-line)
           (setq last-line-reached t)
