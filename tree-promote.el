@@ -114,6 +114,18 @@
           (call-interactively 'indent-rigidly (vector beg end))
         (indent-rigidly beg end indentation-level))
       ;; (my-indent beg end))
+(defun tree-promote-indent-end-of-defun ()
+  "Indent until the end of the current defun."
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (save-excursion
+               (end-of-defun)
+               (point)))
+        (indentation-level (tree-promote--indentation-offset)))
+    (if (equal beg end)
+        ;; case we're at the last defun or in __main__, not a defun.
+        (setq end (point-max)))
+    (indent-rigidly beg end indentation-level)
     ))
 (defun beginning-of-line-point ()
   (save-excursion
@@ -167,6 +179,7 @@
   "tree promote"
   (">" (tree-promote) "Indent")
   ("<" (tree-promote-demote) "De-indent")
+  ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
   ("d" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
