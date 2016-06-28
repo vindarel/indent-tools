@@ -92,11 +92,43 @@
     (end-of-line)
     ))
 
-(defun tree-promote-end-of-tree-point ()
-  "Get the point of the end of the indentend tree."
+(defun tree-promote-end-of-level () ;; OK needs more tests
+  "Go to the end of this indentation level"
+  (interactive)
+  (let* ((indentation (current-line-indentation))
+         (last-line-reached nil))
+    (beginning-of-line-text)
+    (next-line)
+    (while (not last-line-reached)
+      (if (my-blank-line-p)
+          (next-line))
+      (if (< (length (current-line-indentation))
+             (length indentation))
+          (setq last-line-reached t)
+        (next-line)))
+
+    (beginning-of-line-text)))
+
+(defun tree-promote-end-of-level-point ()
+  ""
   (save-excursion
-    (tree-promote-goto-end-of-tree)
+    (tree-promote-end-of-level)
+    (previous-line)
     (point)))
+
+(defun tree-promote-indent-end-of-level ()
+  ""
+  (let ((beg (point))
+        (end (tree-promote-end-of-level-point))
+        (offset (tree-promote--indentation-offset)))
+    (indent-rigidly beg end offset)))
+
+(defun tree-promote-goto-next-sibling () ;; !! already done with yaml next sibling !
+  (interactive)
+  (call-interactively 'tree-promote-goto-end-of-level)
+  ;; go to next char, excluding whitespaces or newline (skip new lines).
+  (search-forward-regexp "[^\n ]") (backward-char)
+)
 
 (defun tree-promote-select ()
   "Select the tree (useful to visualize.
@@ -122,9 +154,11 @@
           (end (tree-promote-end-of-tree-point))
           (indentation-level (tree-promote--indentation-offset)))
     (if select
-          (call-interactively 'indent-rigidly (vector beg end))
-        (indent-rigidly beg end indentation-level))
-      ;; (my-indent beg end))
+            (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
+            (indent-rigidly beg end indentation-level))
+          ;; (my-indent beg end))
+          ))
+
 (defun tree-promote-indent-end-of-defun ()
   "Indent until the end of the current defun."
   (interactive)
@@ -188,6 +222,7 @@
   ("<" (tree-promote-demote) "De-indent")
   ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
+  (")" (tree-promote-indent-end-of-level) "indent until end of level")
   ("d" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
