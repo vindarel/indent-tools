@@ -92,7 +92,20 @@
     (end-of-line)
     ))
 
-(defun tree-promote-end-of-level () ;; OK needs more tests
+(defun tree-promote-select-end-of-tree ()
+  ""
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (save-excursion
+               (tree-promote-goto-end-of-tree)
+               (point))))
+    (goto-char beg)
+    (push-mark)
+    (activate-mark)
+    (goto-char end)
+    ))
+
+(defun tree-promote-end-of-level () ;; OK needs more tests MORE TESTS PLZ
   "Go to the end of this indentation level"
   (interactive)
   (let* ((indentation (current-line-indentation))
@@ -226,6 +239,7 @@
   ("d" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
+  ("S" (tree-promote-select-end-of-tree) "select until end of tree")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
 
