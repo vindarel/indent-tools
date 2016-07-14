@@ -92,6 +92,21 @@
     (end-of-line)
     ))
 
+(defun tree-promote-goto-parent ()
+  ""
+  (interactive)
+  (beginning-of-line-text)
+  (unless (string-equal (current-line-indentation) "")
+      (let ((element-regexp "[a-z]"))
+        (search-backward-regexp (concat "^"
+                                        (s-left (- (length (current-line-indentation))
+                                                   (tree-promote--indentation-offset))
+                                                (current-line-indentation))
+                                        element-regexp))
+        (beginning-of-line-text))
+  (message "you don't have more parents")
+  ))
+
 (defun tree-promote-select-end-of-tree ()
   ""
   (interactive)
@@ -239,6 +254,7 @@
   ("d" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
+  ("u" (tree-promote-goto-parent) "go one parent up")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
