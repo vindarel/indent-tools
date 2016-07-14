@@ -270,6 +270,7 @@
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
   ("n" (my-yaml-next-sibling) "next sibling") ;; to integrate
   ("p" (my-yaml-previous-sibling) "previous sibling")
+  ("i" (helm-imenu) "imenu")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
 
