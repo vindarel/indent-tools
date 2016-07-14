@@ -107,6 +107,17 @@
   (message "you don't have more parents")
   ))
 
+(defun tree-promote-goto-child ()
+  "Go down to the first child (line with greater indentation)."
+  (interactive)
+  (beginning-of-line-text)
+  (let ((element-regexp "[a-z]"))
+    (search-forward-regexp (concat "^"
+                                   (current-line-indentation)
+                                   (s-repeat (tree-promote--indentation-offset) " ")
+                                   element-regexp))
+    ))
+
 (defun tree-promote-select-end-of-tree ()
   ""
   (interactive)
@@ -251,10 +262,11 @@
   ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
   (")" (tree-promote-indent-end-of-level) "indent until end of level")
-  ("d" (tree-promote-delete) "Delete")
+  ("D" (tree-promote-delete) "Delete")
   ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
   ("u" (tree-promote-goto-parent) "go one parent up")
+  ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
