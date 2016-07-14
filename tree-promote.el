@@ -247,13 +247,14 @@
     (comment-region beg end)))
 
 (defun tree-promote-delete ()
+(defun tree-promote-kill ()
   "Delete the current indentated tree."
   (interactive)
   (let ((beg (save-excursion
                (beginning-of-line-text)
                (point)))
         (end (tree-promote-end-of-tree-point)))
-    (delete-region beg end)))
+    (kill-region beg end)))
 
 (defhydra tree-promote-hydra (:color red :columns 2)
   "tree promote"
@@ -262,7 +263,7 @@
   ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
   (")" (tree-promote-indent-end-of-level) "indent until end of level")
-  ("D" (tree-promote-delete) "Delete")
+  ("K" (tree-promote-kill) "Kill")
   ("s" (tree-promote-select) "Select region")
   ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
   ("u" (tree-promote-goto-parent) "go one parent up")
