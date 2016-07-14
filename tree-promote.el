@@ -268,6 +268,8 @@
   ("u" (tree-promote-goto-parent) "go one parent up")
   ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
+  ("n" (my-yaml-next-sibling) "next sibling") ;; to integrate
+  ("p" (my-yaml-previous-sibling) "previous sibling")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
 
