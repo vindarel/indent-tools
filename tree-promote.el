@@ -282,7 +282,8 @@
   (beginning-of-line)
   (search-backward-regexp (concat "^"
                                   (current-line-indentation)
-                                  my-yaml-element-regexp))
+                                  "[^\s-]"
+                                  tree-promote-node-regexp))
   (beginning-of-line-text))
 (defhydra tree-promote-hydra (:color red :columns 2)
   "tree promote"
