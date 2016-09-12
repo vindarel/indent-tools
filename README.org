@@ -1,22 +1,27 @@
 * Tree-promote
 
-Promote and demote a tree for  quick and easy code manipulation. Think
-org-mode, but for code.
+Indent, de-indent or move around code, based on indentation (python,
+yaml, jade, etc).
 
-Meant for indentation-based languages.
+Meant for indentation-based  languages, but can be used  any time with
+indented text.
 
-Warning: horrible and rough implementation, but yet super great !
+Warning: WIP, horrible and rough implementation, but yet super great !
 
 Example:
 
 #+BEGIN_SRC python
-def foo(): # <- point on this line, call M-x tree-promote
+if True:
+    pass
+if False: # <- point on this line, call M-x tree-promote
     pass
 print
 #+END_SRC
 you get
 #+BEGIN_SRC python
-    def foo():
+if True:
+    pass
+    if False: # <- indented
         pass
 print
 #+END_SRC
@@ -41,6 +46,9 @@ according to the major mode (currently supported: python, jade, yaml).
 With the hydra, repeat this action as much as you wish.
 
 Indent by only one space (useful for jade-mode): =SPC= key with the hydra.
+
+See also: (de)indenting until the end of the current indentation level
+(i.e., indent every nodes with the same level).
 
 ** Delete, comment, select
 
