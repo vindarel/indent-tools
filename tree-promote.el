@@ -95,30 +95,33 @@
     ))
 
 (defun tree-promote-goto-parent ()
-  ""
+  "Go to this node's parent, one indentation level up."
   (interactive)
   (beginning-of-line-text)
-  (unless (string-equal (current-line-indentation) "")
-      (let ((element-regexp "[a-z]"))
-        (search-backward-regexp (concat "^"
-                                        (s-left (- (length (current-line-indentation))
-                                                   (tree-promote--indentation-offset))
-                                                (current-line-indentation))
-                                        element-regexp))
-        (beginning-of-line-text))
-  (message "you don't have more parents")
-  ))
+  (if (not (s-blank? (current-line-indentation)))
+      (progn
+        (if (search-backward-regexp (concat "^"
+                                            (s-left (- (length (current-line-indentation))
+                                                       (tree-promote--indentation-offset))
+                                                    (current-line-indentation))
+                                            tree-promote-node-regexp)
+                                    nil t)
+            (beginning-of-line-text)
+          (message "you don't have more parents")))
+    (message "you don't have more parents")))
 
 (defun tree-promote-goto-child ()
   "Go down to the first child (line with greater indentation)."
   (interactive)
   (beginning-of-line-text)
-  (let ((element-regexp "[a-z]"))
-    (search-forward-regexp (concat "^"
-                                   (current-line-indentation)
-                                   (s-repeat (tree-promote--indentation-offset) " ")
-                                   element-regexp))
-    ))
+  (unless (search-forward-regexp (concat "^"
+                                     (current-line-indentation)
+                                     (s-repeat (tree-promote--indentation-offset) " ")
+                                     tree-promote-node-regexp)
+                             nil
+                             t)
+    (message "you don't have more children."))
+  (beginning-of-line-text))
 
 (defun tree-promote-select-end-of-tree ()
   ""
