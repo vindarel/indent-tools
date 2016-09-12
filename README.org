@@ -40,8 +40,10 @@ call an action multiple times in a row:
 
 *** Indent, de-indent
 
-Indent an  indentation tree:  =M-x tree-promote-demote=.  This indents
-according to the major mode (currently supported: python, jade, yaml).
+Indent an  indentation tree: =M-x tree-promote-demote=.   This indents
+according  to  the  major  mode (currently  supported:  python,  jade,
+yaml. For  other modes, it indents  by =tree-promote-indent-offset=, 4
+spaces).
 
 With the hydra, repeat this action as much as you wish.
 
@@ -85,3 +87,5 @@ just used the Hydra feature.
 (indent all siblings at once ? Move around siblings ?).
 
 See `move-text` in melpa to move regions up and down.
+
+See how [[https://github.com/zenozeng/yafolding.el/blob/master/yafolding.el][yafolding]] did.

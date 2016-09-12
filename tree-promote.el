@@ -9,6 +9,8 @@
 
 (defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"']" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
 
+(defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
+
 (defun current-line ()
   "returns the current line."
   ;; http://ergoemacs.org/emacs/elisp_all_about_lines.html
@@ -39,8 +41,6 @@
   ;; thanks https://stackoverflow.com/questions/2238418/emacs-lisp-how-to-get-buffer-major-mode
   (with-current-buffer buffer-or-string
     major-mode))
-
-(defvar tree-promote-indent-offset 2 "default indentation offset")
 
 (defun beginning-of-line-point ()
   (save-excursion
