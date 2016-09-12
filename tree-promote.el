@@ -7,6 +7,8 @@
 
 ;; As an answer to https://www.reddit.com/r/emacs/comments/4jb8dj/orgmodelike_promotedemote_tree_for_editing/
 
+(defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"']" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
+
 (defun current-line ()
   "returns the current line."
   ;; http://ergoemacs.org/emacs/elisp_all_about_lines.html
@@ -256,6 +258,32 @@
         (end (tree-promote-end-of-tree-point)))
     (kill-region beg end)))
 
+
+(defun tree-promote-next-sibling ()
+  "Goes to the next element of the same level (defined by the current line indentation)."
+  (interactive)
+  (end-of-line)
+  (let ((yaml-regexp tree-promote-node-regexp))
+    ;; (setq yaml-element-regexp ".*") ;; should not start by a comment
+    (or (search-forward-regexp (concat "^"
+                                       (current-line-indentation)
+                                       "[^\s-]" ;; exclude following whitespaces
+                                       yaml-regexp)
+                               nil ; don't bound the search
+                               t ; if search fails just return nil, no error
+                               )
+        (goto-char (point-max)))
+    (beginning-of-line-text)))
+
+(defun tree-promote-previous-sibling ()
+  "Go to previous sibling."
+  (interactive)
+  ;; (beginning-of-line-text)
+  (beginning-of-line)
+  (search-backward-regexp (concat "^"
+                                  (current-line-indentation)
+                                  my-yaml-element-regexp))
+  (beginning-of-line-text))
 (defhydra tree-promote-hydra (:color red :columns 2)
   "tree promote"
   (">" (tree-promote) "Indent")
@@ -269,8 +297,8 @@
   ("u" (tree-promote-goto-parent) "go one parent up")
   ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
-  ("n" (my-yaml-next-sibling) "next sibling") ;; to integrate
-  ("p" (my-yaml-previous-sibling) "previous sibling")
+  ("n" (tree-promote-next-sibling) "next sibling") ;; to integrate
+  ("p" (tree-promote-previous-sibling) "previous sibling")
   ("i" (helm-imenu) "imenu")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
