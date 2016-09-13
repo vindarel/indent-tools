@@ -17,7 +17,7 @@
 
 (require 'hydra)
 
-(defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"']" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
+(defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"'\-]" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
 
 (defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
 
