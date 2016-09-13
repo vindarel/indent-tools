@@ -7,6 +7,8 @@
 
 ;; As an answer to https://www.reddit.com/r/emacs/comments/4jb8dj/orgmodelike_promotedemote_tree_for_editing/
 
+(require 'hydra)
+
 (defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"']" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
 
 (defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
@@ -171,8 +173,7 @@
   (interactive)
   (call-interactively 'tree-promote-goto-end-of-level)
   ;; go to next char, excluding whitespaces or newline (skip new lines).
-  (search-forward-regexp "[^\n ]") (backward-char)
-)
+  (search-forward-regexp "[^\n ]") (backward-char))
 
 (defun tree-promote-select ()
   "Select the tree (useful to visualize.
