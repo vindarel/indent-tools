@@ -1,9 +1,17 @@
-;; tree-promote.el
+;; tree-promote.el --- Indent, move around code based on indentation (yaml, python, etc).
 
-;; Promote (and demote) a tree for code editing (think org-mode).
+;; Copyright (C) 2016  wtf public licence
+
+;; Author: vindarel <@>
+;; URL: https://gitlab.com/emacs-stuff/indent-promote/
+;; Version: 0.0.1
+;; Keywords: indentation, movements
+;; Package-Requires: ((s "0") (hydra "0"))
+
+;;; Commentary:
 ;;
-;; This snippet is meant for indentation-based languages.
-
+;; Indent, de-indent, move around code based on indentation. Perfect to navigate in a big yaml file or in Python code.
+;;; Code:
 
 ;; As an answer to https://www.reddit.com/r/emacs/comments/4jb8dj/orgmodelike_promotedemote_tree_for_editing/
 
@@ -313,3 +321,7 @@
 
 
 (global-set-key (kbd "C-c >") 'tree-promote-hydra/body) ;; overrides in python-mode that only indent the current line
+
+(provide 'tree-promote)
+
+;;; tree-promote.el ends here
