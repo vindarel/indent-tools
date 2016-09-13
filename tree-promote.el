@@ -197,10 +197,8 @@
     (goto-char end)
     ))
 
-(defun tree-promote (&optional select)
-;; (defun tree-promote (select)
-  "Indent the current tree (based on indentation)."
-    ;; (interactive "P")
+(defun tree-promote-indent (&optional select)
+  "Indent the current tree."
     (interactive)
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
@@ -296,9 +294,10 @@
                                   "[^\s-]"
                                   tree-promote-node-regexp))
   (beginning-of-line-text))
+
 (defhydra tree-promote-hydra (:color red :columns 2)
   "tree promote"
-  (">" (tree-promote) "Indent")
+  (">" (tree-promote-indent) "Indent")
   ("<" (tree-promote-demote) "De-indent")
   ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
