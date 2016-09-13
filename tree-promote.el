@@ -251,7 +251,6 @@
     (setq tree-promote--last-end end)
     (comment-region beg end)))
 
-(defun tree-promote-delete ()
 (defun tree-promote-kill ()
   "Delete the current indentated tree."
   (interactive)
