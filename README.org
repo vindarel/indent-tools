@@ -72,6 +72,7 @@ move  *one parent  up* or  the  first *child  down* (line  with lesser  or
 greater indentation), much useful for a  large yaml file, but also for
 code navigation.
 
+*j* and *k* (with the hydra) as usual go to the next and previous line.
 
 ** Ideas, todos
 

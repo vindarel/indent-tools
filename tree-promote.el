@@ -304,6 +304,8 @@
   ("n" (tree-promote-next-sibling) "next sibling") ;; to integrate
   ("p" (tree-promote-previous-sibling) "previous sibling")
   ("i" (helm-imenu) "imenu")
+  ("j" (next-line) "next line")
+  ("k" (previous-line) "previous line")
   ("<SPC>" (tree-promote-indent-space) "indent with a space")
   )
 
