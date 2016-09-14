@@ -32,11 +32,17 @@ Clone te repo and evaluate the file (=M-x load-file=).
 
 ** Usage
 
-Shortcut put at =C-c >=.
-
 Just use  the hydra, it shows  all available options and  it allows to
 call an action multiple times in a row:
 : M-x tree-promot-hydra/body
+
+Shortcut put at =C-c >=.
+
+To bind this in python-mode:
+#+BEGIN_SRC emacs-lisp
+(define-key python-mode-map (kbd "C-c >") 'tree-promote-hydra/body)
+#+END_SRC
+(=C-c >= originally bound to indent the line).
 
 *** Indent, de-indent
 
@@ -55,27 +61,27 @@ with the hydra.
 See also: (de)indenting until the end of the current indentation level
 (i.e., indent every nodes with the same level).
 
-** Delete, comment, select
+*** Delete, comment, select
 
-Delete the tree:
-: M-x tree-promote-kill
+ Delete the tree:
+ : M-x tree-promote-kill
 
-Comment it:
-: M-x tree-promote-comment
+ Comment it:
+ : M-x tree-promote-comment
 
-And also: select it.
+ And also: select it.
 
-** Move
+*** Move
 
-Move to the *end of the tree*,
+ Move to the *end of the tree*,
 
-to the *next* or the *previous sibling* (a line with the same indentation),
+ to the *next* or the *previous sibling* (a line with the same indentation),
 
-move  *one parent  up* or  the  first *child  down* (line  with lesser  or
-greater indentation), much useful for a  large yaml file, but also for
-code navigation.
+ move  *one parent  up* or  the  first *child  down* (line  with lesser  or
+ greater indentation), much useful for a  large yaml file, but also for
+ code navigation.
 
-*j* and *k* (with the hydra) as usual go to the next and previous line.
+ *j* and *k* (with the hydra) as usual go to the next and previous line.
 
 ** Develop
 
