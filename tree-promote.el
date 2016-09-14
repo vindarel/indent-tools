@@ -17,7 +17,7 @@
 
 (require 'hydra)
 
-(defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"'\-]" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
+(defvar tree-promote-node-regexp "\"?[a-zA-Z0-9(\"'-]" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
 
 (defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
 
@@ -270,7 +270,7 @@
     ;; (setq yaml-element-regexp ".*") ;; should not start by a comment
     (or (search-forward-regexp (concat "^"
                                        (current-line-indentation)
-                                       "[^\s-]" ;; exclude following whitespaces
+                                       ;; "[^\s-]" ;; exclude following whitespaces
                                        yaml-regexp)
                                nil ; don't bound the search
                                t ; if search fails just return nil, no error
@@ -285,8 +285,8 @@
   (beginning-of-line)
   (search-backward-regexp (concat "^"
                                   (current-line-indentation)
-                                  "[^\s-]"
-                                  tree-promote-node-regexp))
+                                  ;; "[^\s-]"
+                                  tree-promote-node-regexp)
   (beginning-of-line-text))
 
 (defhydra tree-promote-hydra (:color red :columns 2)
