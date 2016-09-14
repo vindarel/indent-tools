@@ -278,15 +278,18 @@
         (message "We didn't find a next sibling."))
     (beginning-of-line-text)))
 
-(defun tree-promote-previous-sibling ()
+(defun tree-promote-goto-previous-sibling ()
   "Go to previous sibling."
   (interactive)
   ;; (beginning-of-line-text)
   (beginning-of-line)
-  (search-backward-regexp (concat "^"
+  (or (search-backward-regexp (concat "^"
                                   (current-line-indentation)
                                   ;; "[^\s-]"
                                   tree-promote-node-regexp)
+                          nil
+                          t)
+      (message "We didn't find a previous sibling."))
   (beginning-of-line-text))
 
 (defhydra tree-promote-hydra (:color red :columns 2)
@@ -303,7 +306,7 @@
   ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
   ("n" (tree-promote-goto-next-sibling) "next sibling")
-  ("p" (tree-promote-previous-sibling) "previous sibling")
+  ("p" (tree-promote-goto-previous-sibling) "previous sibling")
   ("i" (helm-imenu) "imenu")
   ("j" (next-line) "next line")
   ("k" (previous-line) "previous line")
