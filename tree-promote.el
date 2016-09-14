@@ -177,12 +177,6 @@
         (offset (tree-promote--indentation-offset)))
     (indent-rigidly beg end offset)))
 
-(defun tree-promote-goto-next-sibling () ;; !! already done with yaml next sibling !
-  (interactive)
-  (call-interactively 'tree-promote-goto-end-of-level)
-  ;; go to next char, excluding whitespaces or newline (skip new lines).
-  (search-forward-regexp "[^\n ]") (backward-char))
-
 (defun tree-promote-select ()
   "Select the tree (useful to visualize.
    Also useful: highlight-indentation-current-column-mode"
@@ -268,7 +262,7 @@
     (kill-region beg end)))
 
 
-(defun tree-promote-next-sibling ()
+(defun tree-promote-goto-next-sibling ()
   "Goes to the next element of the same level (defined by the current line indentation)."
   (interactive)
   (end-of-line)
@@ -308,7 +302,7 @@
   ("u" (tree-promote-goto-parent) "go one parent up")
   ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
-  ("n" (tree-promote-next-sibling) "next sibling") ;; to integrate
+  ("n" (tree-promote-goto-next-sibling) "next sibling") ;; to integrate
   ("p" (tree-promote-previous-sibling) "previous sibling")
   ("i" (helm-imenu) "imenu")
   ("j" (next-line) "next line")
