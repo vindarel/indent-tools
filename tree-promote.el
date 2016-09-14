@@ -263,7 +263,7 @@
 
 
 (defun tree-promote-goto-next-sibling ()
-  "Goes to the next element of the same level (defined by the current line indentation)."
+  "Goes to the next element of the same level."
   (interactive)
   (end-of-line)
   (let ((yaml-regexp tree-promote-node-regexp))
@@ -275,7 +275,7 @@
                                nil ; don't bound the search
                                t ; if search fails just return nil, no error
                                )
-        (goto-char (point-max)))
+        (message "We didn't find a next sibling."))
     (beginning-of-line-text)))
 
 (defun tree-promote-previous-sibling ()
@@ -302,7 +302,7 @@
   ("u" (tree-promote-goto-parent) "go one parent up")
   ("d" (tree-promote-goto-child) "go down one child")
   ("S" (tree-promote-select-end-of-tree) "select until end of tree")
-  ("n" (tree-promote-goto-next-sibling) "next sibling") ;; to integrate
+  ("n" (tree-promote-goto-next-sibling) "next sibling")
   ("p" (tree-promote-previous-sibling) "previous sibling")
   ("i" (helm-imenu) "imenu")
   ("j" (next-line) "next line")
