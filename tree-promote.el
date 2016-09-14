@@ -204,6 +204,17 @@
           ;; (my-indent beg end))
           ))
 
+(defun tree-promote-indent-paragraph ()
+  "Indent the current paragraph, i.e. the block of text until a
+   new line. The paragraph is the one you would jump with
+   forward-paragraph, bound to M-n"
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (save-excursion
+               (forward-paragraph)
+               (point))))
+    (indent-rigidly beg end (tree-promote--indentation-offset))))
+
 (defun tree-promote-indent-end-of-defun ()
   "Indent until the end of the current defun."
   (interactive)
@@ -298,6 +309,7 @@
   ("<" (tree-promote-demote) "De-indent")
   ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
   ("c" (tree-promote-comment) "Comment")
+  ("P" (tree-promote-indent-paragraph) "Indent the paragraph")
   (")" (tree-promote-indent-end-of-level) "indent until end of level")
   ("K" (tree-promote-kill) "Kill")
   ("s" (tree-promote-select) "Select region")

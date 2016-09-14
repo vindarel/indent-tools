@@ -41,13 +41,16 @@ call an action multiple times in a row:
 *** Indent, de-indent
 
 Indent an  indentation tree: =M-x tree-promote-demote=.   This indents
-according  to  the  major  mode (currently  supported:  python,  jade,
-yaml. For  other modes, it indents  by =tree-promote-indent-offset=, 4
-spaces).
+according to  the major  mode (currently specially  supported: python,
+jade,     yaml.     For     other     modes,     it     indents     by
+=tree-promote-indent-offset=, 4 spaces).
 
 With the hydra, repeat this action as much as you wish.
 
-Indent by only one space (useful for jade-mode): =SPC= key with the hydra.
+Indent by only *one space* (useful for jade-mode): =SPC= key with the hydra.
+
+Indent  the *paragraph*:  =M-x tree-promote-indent-paragraph=,  or =P=
+with the hydra.
 
 See also: (de)indenting until the end of the current indentation level
 (i.e., indent every nodes with the same level).
@@ -73,6 +76,15 @@ greater indentation), much useful for a  large yaml file, but also for
 code navigation.
 
 *j* and *k* (with the hydra) as usual go to the next and previous line.
+
+** Develop
+
+To run the unit tests, go into the tests file and run *ert*:
+: M-x ert
+and either choose a specific test, either keep =t= to run all.
+
+You'll have an ert buffer with passing tests in green, failing ones in
+red. Use TAB end ENTER in this buffer (à la org-mode).
 
 ** Ideas, todos
 
