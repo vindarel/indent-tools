@@ -303,26 +303,37 @@
       (message "We didn't find a previous sibling."))
   (beginning-of-line-text))
 
-(defhydra tree-promote-hydra (:color red :columns 2)
-  "tree promote"
-  (">" (tree-promote-indent) "Indent")
-  ("<" (tree-promote-demote) "De-indent")
-  ("E" (tree-promote-indent-end-of-defun) "indent 'til end of defun")
-  ("c" (tree-promote-comment) "Comment")
-  ("P" (tree-promote-indent-paragraph) "Indent the paragraph")
-  (")" (tree-promote-indent-end-of-level) "indent until end of level")
-  ("K" (tree-promote-kill) "Kill")
-  ("s" (tree-promote-select) "Select region")
-  ("e" (tree-promote-goto-end-of-tree) "goto end of tree")
-  ("u" (tree-promote-goto-parent) "go one parent up")
-  ("d" (tree-promote-goto-child) "go down one child")
-  ("S" (tree-promote-select-end-of-tree) "select until end of tree")
-  ("n" (tree-promote-goto-next-sibling) "next sibling")
-  ("p" (tree-promote-goto-previous-sibling) "previous sibling")
-  ("i" (helm-imenu) "imenu")
-  ("j" (next-line) "next line")
-  ("k" (previous-line) "previous line")
-  ("<SPC>" (tree-promote-indent-space) "indent with a space")
+(defhydra tree-promote-hydra (:color red :hint nil)
+  "
+ ^Indent^         | ^Navigation^        | ^Actions^
+------------------+---------------------+-----------
+ _>_ indent       | _j_ v               | _K_ kill
+ _<_ de-indent    | _k_ ʌ               | _i_ imenu
+ _l_ end of level | _n_ next sibling
+ _E_ defun        | _p_ previous sibling
+ _P_ paragraph    | _u_ up parent
+ _SPC_ space      | _d_ down child
+                  | _e_ end of tree
+"
+
+  (">" tree-promote-indent)
+  ("<" tree-promote-demote)
+  ("E" tree-promote-indent-end-of-defun)
+  ("c" tree-promote-comment)
+  ("P" tree-promote-indent-paragraph)
+  ("l" tree-promote-indent-end-of-level)
+  ("K" tree-promote-kill)
+  ("s" tree-promote-select)
+  ("e" tree-promote-goto-end-of-tree)
+  ("u" tree-promote-goto-parent)
+  ("d" tree-promote-goto-child)
+  ("S" tree-promote-select-end-of-tree)
+  ("n" tree-promote-goto-next-sibling)
+  ("p" tree-promote-goto-previous-sibling)
+  ("i" helm-imenu)
+  ("j" next-line)
+  ("k" previous-line)
+  ("SPC" tree-promote-indent-space)
   )
 
 (defalias 'hydra-tree-promote 'tree-promote-hydra)
