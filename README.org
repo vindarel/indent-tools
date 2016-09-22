@@ -40,7 +40,10 @@ Shortcut put at =C-c >=.
 
 To bind this in python-mode:
 #+BEGIN_SRC emacs-lisp
-(define-key python-mode-map (kbd "C-c >") 'tree-promote-hydra/body)
+(add-hook 'python-mode-hook
+ (lambda () (define-key python-mode-map (kbd "C-c >") 'tree-promote-hydra/body))
+)
+
 #+END_SRC
 (=C-c >= originally bound to indent the line).
 
