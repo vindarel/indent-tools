@@ -173,7 +173,7 @@
 (defun tree-promote-indent-end-of-level ()
   "Indent until the end of this indentation level."
   (interactive)
-  (let ((beg (point))
+  (let ((beg (beginning-of-line-point))
         (end (tree-promote-end-of-level-point))
         (offset (tree-promote--indentation-offset)))
     (indent-rigidly beg end offset)))
