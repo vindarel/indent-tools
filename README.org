@@ -64,17 +64,18 @@ with the hydra.
 See also: (de)indenting until the end of the current indentation level
 (i.e., indent every nodes with the same level).
 
-*** Delete, copy, comment, select
+*** Kill, copy, comment, select indentation tree / level / paragraph
 
- Delete the tree:
- : M-x tree-promote-kill
+See the  hydra. When you choose  an action (kill, copy,  comment), you
+are then asked what to operate upon: the indentation tree, level, or paragraph.
 
- Comment it:
- : M-x tree-promote-comment
+There are the interactive functions too:
 
- Copy: the paragraph. See the hydra.
+ : M-x tree-promote-kill-[hydra/body, tree, level, paragraph]
 
- And also: select it.
+ Copying:
+
+ : M-x tree-promote-copy-[hydra/body, tree, level, paragraph]
 
 *** Move
 

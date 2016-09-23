@@ -264,16 +264,6 @@
     (setq tree-promote--last-end end)
     (comment-region beg end)))
 
-(defun tree-promote-kill ()
-  "Delete the current indentated tree."
-  (interactive)
-  (let ((beg (save-excursion
-               (beginning-of-line-text)
-               (point)))
-        (end (tree-promote-end-of-tree-point)))
-    (kill-region beg end)))
-
-
 (defun tree-promote-goto-next-sibling ()
   "Goes to the next element of the same level."
   (interactive)
@@ -304,6 +294,7 @@
       (message "We didn't find a previous sibling."))
   (beginning-of-line-text))
 
+;;;;;;; copy
 (defun tree-promote-copy-paragraph ()
   ""
   (interactive)
@@ -320,6 +311,33 @@
   ("p" tree-promote-copy-paragraph "paragraph")
   )
 
+
+;;;;;;; kill
+(defun tree-promote-kill-tree ()
+  "Delete the current indentated tree."
+  (interactive)
+  (let ((beg (save-excursion
+               (beginning-of-line-text)
+               (point)))
+        (end (tree-promote-end-of-tree-point)))
+    (kill-region beg end)))
+
+(defun tree-promote-kill-level ()
+  ""
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (tree-promote-end-of-tree-point)))
+    (kill-region beg end)))
+
+(defhydra tree-promote-kill-hydra (:color blue :after-exit (tree-promote-hydra/body))
+  "
+  "
+  (">" tree-promote-kill-tree "indentation tree")
+  ("p" kill-paragraph "paragraph")
+  ("l" tree-promote-kill-level "level")
+  )
+
+;;;;;; General hydra
 (defhydra tree-promote-hydra (:color red :hint nil)
   "
  ^Indent^         | ^Navigation^        | ^Actions^
@@ -339,7 +357,7 @@
   ("c" tree-promote-comment)
   ("P" tree-promote-indent-paragraph)
   ("l" tree-promote-indent-end-of-level)
-  ("K" tree-promote-kill)
+  ("K" tree-promote-kill-hydra/body :color blue)
   ("C" tree-promote-copy-hydra/body :color blue)
   ("s" tree-promote-select)
   ("e" tree-promote-goto-end-of-tree)
