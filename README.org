@@ -64,13 +64,15 @@ with the hydra.
 See also: (de)indenting until the end of the current indentation level
 (i.e., indent every nodes with the same level).
 
-*** Delete, comment, select
+*** Delete, copy, comment, select
 
  Delete the tree:
  : M-x tree-promote-kill
 
  Comment it:
  : M-x tree-promote-comment
+
+ Copy: the paragraph. See the hydra.
 
  And also: select it.
 

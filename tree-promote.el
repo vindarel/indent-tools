@@ -304,13 +304,29 @@
       (message "We didn't find a previous sibling."))
   (beginning-of-line-text))
 
+(defun tree-promote-copy-paragraph ()
+  ""
+  (interactive)
+  (let ((beg (beginning-of-line-point))
+        (end (save-excursion
+               (forward-paragraph)
+               (point))))
+    (kill-ring-save beg end)
+    (message "Copied paragraph")))
+
+(defhydra tree-promote-copy-hydra (:color blue :after-exit (tree-promote-hydra/body))
+  "
+  "
+  ("p" tree-promote-copy-paragraph "paragraph")
+  )
+
 (defhydra tree-promote-hydra (:color red :hint nil)
   "
  ^Indent^         | ^Navigation^        | ^Actions^
 ------------------+---------------------+-----------
  _>_ indent       | _j_ v               | _K_ kill
  _<_ de-indent    | _k_ ʌ               | _i_ imenu
- _l_ end of level | _n_ next sibling
+ _l_ end of level | _n_ next sibling    | _C_ Copy…
  _E_ defun        | _p_ previous sibling
  _P_ paragraph    | _u_ up parent
  _SPC_ space      | _d_ down child
@@ -324,6 +340,7 @@
   ("P" tree-promote-indent-paragraph)
   ("l" tree-promote-indent-end-of-level)
   ("K" tree-promote-kill)
+  ("C" tree-promote-copy-hydra/body :color blue)
   ("s" tree-promote-select)
   ("e" tree-promote-goto-end-of-tree)
   ("u" tree-promote-goto-parent)
