@@ -35,14 +35,6 @@
   ;; https://github.com/magnars/s.el#s-match-strings-all-regex-string
   (car (car (s-match-strings-all "^\s+" (current-line)) ) ))
 
-(defun my-indent (reg-beg reg-end)
-  "Indent a region with spaces (should be replaced with a
-   built-in one, but I observed evil's is buggy in some modes, like
-   jade-mode."
-  (interactive "r")
-  (save-excursion
-    (replace-regexp "^" "    " nil reg-beg reg-end)))
-
 (defun my-blank-line-p ()
   "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
@@ -202,9 +194,7 @@
           (indentation-level (tree-promote--indentation-offset)))
     (if select
             (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
-            (indent-rigidly beg end indentation-level))
-          ;; (my-indent beg end))
-          ))
+            (indent-rigidly beg end indentation-level))))
 
 (defun tree-promote-indent-paragraph ()
   "Indent the current paragraph, i.e. the block of text until a
