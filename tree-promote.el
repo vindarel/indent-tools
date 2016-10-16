@@ -32,11 +32,6 @@
   "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
 
-(defun beginning-of-line-point ()
-  (save-excursion
-    (beginning-of-line)
-    (point)))
-
 (defun tree-promote-end-of-tree-point ()
   "Get the point of the end of the indentend tree."
   (save-excursion
@@ -116,7 +111,7 @@
 (defun tree-promote-select-end-of-tree ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (tree-promote-goto-end-of-tree)
                (point))))
@@ -153,7 +148,7 @@
 (defun tree-promote-indent-end-of-level ()
   "Indent until the end of this indentation level."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-level-point))
         (offset (tree-promote--indentation-offset)))
     (indent-rigidly beg end offset)))
@@ -188,7 +183,7 @@
    new line. The paragraph is the one you would jump with
    forward-paragraph, bound to M-n"
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (forward-paragraph)
                (point))))
@@ -197,7 +192,7 @@
 (defun tree-promote-indent-end-of-defun ()
   "Indent until the end of the current defun."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (end-of-defun)
                (point)))
@@ -211,7 +206,7 @@
 (defun tree-promote-indent-space ()
   "Indent with only a space (specially useful in jade-mode)."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point))
         (indentation-level (tree-promote--indentation-offset)))
     (save-excursion
@@ -236,7 +231,7 @@
 
 (defun tree-promote-comment ()
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point)))
     (setq tree-promote--last-beg beg) ;; re-use to uncomment
     (setq tree-promote--last-end end)
@@ -276,7 +271,7 @@
 (defun tree-promote-copy-paragraph ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (forward-paragraph)
                (point))))
@@ -303,7 +298,7 @@
 (defun tree-promote-kill-level ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point)))
     (kill-region beg end)))
 
