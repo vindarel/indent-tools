@@ -28,7 +28,7 @@
     (re-search-backward "^\\(\s*\\)" (line-beginning-position))
     (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
 
-(defun my-blank-line-p ()
+(defun tree-promote-on-blank-line-p ()
   "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
 
@@ -70,7 +70,7 @@
     (next-line)
     (while (and (not last-line-reached)
                 (or
-                 (my-blank-line-p)
+                 (tree-promote-on-blank-line-p)
                  (string-equal (char-to-string (following-char)) " ")))
       (if (tree-promote--on-last-line)
           (setq last-line-reached t)
@@ -129,7 +129,7 @@
     (beginning-of-line-text)
     (next-line)
     (while (not last-line-reached)
-      (if (my-blank-line-p)
+      (if (tree-promote-on-blank-line-p)
           (next-line))
       (if (< (length (tree-promote-current-line-indent))
              (length indentation))
