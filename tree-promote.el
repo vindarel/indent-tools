@@ -22,18 +22,11 @@
 
 (defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
 
-(defun current-line ()
-  "returns the current line."
-  ;; http://ergoemacs.org/emacs/elisp_all_about_lines.html
-         (let ( (p1 (line-beginning-position))
-                (p2 (line-end-position)))
-           (buffer-substring-no-properties p1 p2)
-           ))
-
-(defun current-line-indentation ()
-  "returns the str of the current indentation (spaces)."
-  ;; https://github.com/magnars/s.el#s-match-strings-all-regex-string
-  (car (car (s-match-strings-all "^\s+" (current-line)) ) ))
+(defun tree-promote-current-line-indent ()
+  "Returns a string containing the spaces that make up the current line's indentation."
+  (save-excursion
+    (re-search-backward "^\\(\s*\\)" (line-beginning-position))
+    (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
 
 (defun my-blank-line-p ()
   "Return true if we are on a blank line"
@@ -76,7 +69,7 @@
 (defun tree-promote-goto-end-of-tree ()
   "Go to the end of the indented tree."
   (interactive)
-  (let ((goal-column (length (current-line-indentation)))  ;; see next-line doc
+  (let ((goal-column (length (tree-promote-current-line-indent)))  ;; see next-line doc
         (last-line-reached nil))
     (beginning-of-line-text)
     (next-line)
@@ -95,12 +88,12 @@
   "Go to this node's parent, one indentation level up."
   (interactive)
   (beginning-of-line-text)
-  (if (not (s-blank? (current-line-indentation)))
+  (if (not (s-blank? (tree-promote-current-line-indent)))
       (progn
         (if (search-backward-regexp (concat "^"
-                                            (s-left (- (length (current-line-indentation))
+                                            (s-left (- (length (tree-promote-current-line-indent))
                                                        (tree-promote--indentation-offset))
-                                                    (current-line-indentation))
+                                                    (tree-promote-current-line-indent))
                                             tree-promote-node-regexp)
                                     nil t)
             (beginning-of-line-text)
@@ -112,7 +105,7 @@
   (interactive)
   (beginning-of-line-text)
   (unless (search-forward-regexp (concat "^"
-                                     (current-line-indentation)
+                                     (tree-promote-current-line-indent)
                                      (s-repeat (tree-promote--indentation-offset) " ")
                                      tree-promote-node-regexp)
                              nil
@@ -136,14 +129,14 @@
 (defun tree-promote-end-of-level () ;; OK needs more tests MORE TESTS PLZ
   "Go to the end of this indentation level"
   (interactive)
-  (let* ((indentation (current-line-indentation))
+  (let* ((indentation (tree-promote-current-line-indent))
          (last-line-reached nil))
     (beginning-of-line-text)
     (next-line)
     (while (not last-line-reached)
       (if (my-blank-line-p)
           (next-line))
-      (if (< (length (current-line-indentation))
+      (if (< (length (tree-promote-current-line-indent))
              (length indentation))
           (setq last-line-reached t)
         (next-line)))
@@ -256,7 +249,7 @@
   (let ((yaml-regexp tree-promote-node-regexp))
     ;; (setq yaml-element-regexp ".*") ;; should not start by a comment
     (or (search-forward-regexp (concat "^"
-                                       (current-line-indentation)
+                                       (tree-promote-current-line-indent)
                                        ;; "[^\s-]" ;; exclude following whitespaces
                                        yaml-regexp)
                                nil ; don't bound the search
@@ -271,7 +264,7 @@
   ;; (beginning-of-line-text)
   (beginning-of-line)
   (or (search-backward-regexp (concat "^"
-                                  (current-line-indentation)
+                                  (tree-promote-current-line-indent)
                                   ;; "[^\s-]"
                                   tree-promote-node-regexp)
                           nil
