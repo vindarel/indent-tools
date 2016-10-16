@@ -39,12 +39,6 @@
   "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
 
-(defun buffer-mode (buffer-or-string)
-  "Returns the major mode associated with a buffer."
-  ;; thanks https://stackoverflow.com/questions/2238418/emacs-lisp-how-to-get-buffer-major-mode
-  (with-current-buffer buffer-or-string
-    major-mode))
-
 (defun beginning-of-line-point ()
   (save-excursion
     (beginning-of-line)
@@ -58,7 +52,7 @@
 
 (defun tree-promote--indentation-offset ()
   "Get the current mode's indentation offset. Return an int (for python, it's usually 4)."
-  (let ((current-mode (buffer-mode (current-buffer))))
+  (let ((current-mode major-mode))
     (cond ((and (equal current-mode 'python-mode)
                 (boundp 'python-indent-offset)
                 (numberp python-indent-offset))
