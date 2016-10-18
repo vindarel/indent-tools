@@ -22,41 +22,15 @@
 
 (defvar tree-promote-indent-offset 4 "default indentation offset, when a mode isnt recognized")
 
-(defun current-line ()
-  "returns the current line."
-  ;; http://ergoemacs.org/emacs/elisp_all_about_lines.html
-         (let ( (p1 (line-beginning-position))
-                (p2 (line-end-position)))
-           (buffer-substring-no-properties p1 p2)
-           ))
-
-(defun current-line-indentation ()
-  "returns the str of the current indentation (spaces)."
-  ;; https://github.com/magnars/s.el#s-match-strings-all-regex-string
-  (car (car (s-match-strings-all "^\s+" (current-line)) ) ))
-
-(defun my-indent (reg-beg reg-end)
-  "Indent a region with spaces (should be replaced with a
-   built-in one, but I observed evil's is buggy in some modes, like
-   jade-mode."
-  (interactive "r")
+(defun tree-promote-current-line-indentation ()
+  "Returns a string containing the spaces that make up the current line's indentation."
   (save-excursion
-    (replace-regexp "^" "    " nil reg-beg reg-end)))
+    (re-search-backward "^\\(\s*\\)" (line-beginning-position))
+    (buffer-substring-no-properties (match-beginning 1) (match-end 1))))
 
-(defun my-blank-line-p ()
+(defun tree-promote-on-blank-line-p ()
   "Return true if we are on a blank line"
   (equal (line-beginning-position) (line-end-position)))
-
-(defun buffer-mode (buffer-or-string)
-  "Returns the major mode associated with a buffer."
-  ;; thanks https://stackoverflow.com/questions/2238418/emacs-lisp-how-to-get-buffer-major-mode
-  (with-current-buffer buffer-or-string
-    major-mode))
-
-(defun beginning-of-line-point ()
-  (save-excursion
-    (beginning-of-line)
-    (point)))
 
 (defun tree-promote-end-of-tree-point ()
   "Get the point of the end of the indentend tree."
@@ -66,7 +40,7 @@
 
 (defun tree-promote--indentation-offset ()
   "Get the current mode's indentation offset. Return an int (for python, it's usually 4)."
-  (let ((current-mode (buffer-mode (current-buffer))))
+  (let ((current-mode major-mode))
     (cond ((and (equal current-mode 'python-mode)
                 (boundp 'python-indent-offset)
                 (numberp python-indent-offset))
@@ -90,13 +64,13 @@
 (defun tree-promote-goto-end-of-tree ()
   "Go to the end of the indented tree."
   (interactive)
-  (let ((goal-column (length (current-line-indentation)))  ;; see next-line doc
+  (let ((goal-column (length (tree-promote-current-line-indentation)))  ;; see next-line doc
         (last-line-reached nil))
     (beginning-of-line-text)
     (next-line)
     (while (and (not last-line-reached)
                 (or
-                 (my-blank-line-p)
+                 (tree-promote-on-blank-line-p)
                  (string-equal (char-to-string (following-char)) " ")))
       (if (tree-promote--on-last-line)
           (setq last-line-reached t)
@@ -109,12 +83,12 @@
   "Go to this node's parent, one indentation level up."
   (interactive)
   (beginning-of-line-text)
-  (if (not (s-blank? (current-line-indentation)))
+  (if (not (s-blank? (tree-promote-current-line-indentation)))
       (progn
         (if (search-backward-regexp (concat "^"
-                                            (s-left (- (length (current-line-indentation))
+                                            (s-left (- (length (tree-promote-current-line-indentation))
                                                        (tree-promote--indentation-offset))
-                                                    (current-line-indentation))
+                                                    (tree-promote-current-line-indentation))
                                             tree-promote-node-regexp)
                                     nil t)
             (beginning-of-line-text)
@@ -126,7 +100,7 @@
   (interactive)
   (beginning-of-line-text)
   (unless (search-forward-regexp (concat "^"
-                                     (current-line-indentation)
+                                     (tree-promote-current-line-indentation)
                                      (s-repeat (tree-promote--indentation-offset) " ")
                                      tree-promote-node-regexp)
                              nil
@@ -137,7 +111,7 @@
 (defun tree-promote-select-end-of-tree ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (tree-promote-goto-end-of-tree)
                (point))))
@@ -150,14 +124,14 @@
 (defun tree-promote-end-of-level () ;; OK needs more tests MORE TESTS PLZ
   "Go to the end of this indentation level"
   (interactive)
-  (let* ((indentation (current-line-indentation))
+  (let* ((indentation (tree-promote-current-line-indentation))
          (last-line-reached nil))
     (beginning-of-line-text)
     (next-line)
     (while (not last-line-reached)
-      (if (my-blank-line-p)
+      (if (tree-promote-on-blank-line-p)
           (next-line))
-      (if (< (length (current-line-indentation))
+      (if (< (length (tree-promote-current-line-indentation))
              (length indentation))
           (setq last-line-reached t)
         (next-line)))
@@ -174,7 +148,7 @@
 (defun tree-promote-indent-end-of-level ()
   "Indent until the end of this indentation level."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-level-point))
         (offset (tree-promote--indentation-offset)))
     (indent-rigidly beg end offset)))
@@ -202,16 +176,14 @@
           (indentation-level (tree-promote--indentation-offset)))
     (if select
             (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
-            (indent-rigidly beg end indentation-level))
-          ;; (my-indent beg end))
-          ))
+            (indent-rigidly beg end indentation-level))))
 
 (defun tree-promote-indent-paragraph ()
   "Indent the current paragraph, i.e. the block of text until a
    new line. The paragraph is the one you would jump with
    forward-paragraph, bound to M-n"
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (forward-paragraph)
                (point))))
@@ -220,7 +192,7 @@
 (defun tree-promote-indent-end-of-defun ()
   "Indent until the end of the current defun."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (end-of-defun)
                (point)))
@@ -234,7 +206,7 @@
 (defun tree-promote-indent-space ()
   "Indent with only a space (specially useful in jade-mode)."
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point))
         (indentation-level (tree-promote--indentation-offset)))
     (save-excursion
@@ -259,7 +231,7 @@
 
 (defun tree-promote-comment ()
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point)))
     (setq tree-promote--last-beg beg) ;; re-use to uncomment
     (setq tree-promote--last-end end)
@@ -272,7 +244,7 @@
   (let ((yaml-regexp tree-promote-node-regexp))
     ;; (setq yaml-element-regexp ".*") ;; should not start by a comment
     (or (search-forward-regexp (concat "^"
-                                       (current-line-indentation)
+                                       (tree-promote-current-line-indentation)
                                        ;; "[^\s-]" ;; exclude following whitespaces
                                        yaml-regexp)
                                nil ; don't bound the search
@@ -287,7 +259,7 @@
   ;; (beginning-of-line-text)
   (beginning-of-line)
   (or (search-backward-regexp (concat "^"
-                                  (current-line-indentation)
+                                  (tree-promote-current-line-indentation)
                                   ;; "[^\s-]"
                                   tree-promote-node-regexp)
                           nil
@@ -299,7 +271,7 @@
 (defun tree-promote-copy-paragraph ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (save-excursion
                (forward-paragraph)
                (point))))
@@ -326,7 +298,7 @@
 (defun tree-promote-kill-level ()
   ""
   (interactive)
-  (let ((beg (beginning-of-line-point))
+  (let ((beg (line-beginning-position))
         (end (tree-promote-end-of-tree-point)))
     (kill-region beg end)))
 
