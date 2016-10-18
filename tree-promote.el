@@ -318,7 +318,7 @@
  _>_ indent       | _j_ v               | _K_ kill
  _<_ de-indent    | _k_ ʌ               | _i_ imenu
  _l_ end of level | _n_ next sibling    | _C_ Copy…
- _E_ defun        | _p_ previous sibling
+ _E_ defun        | _p_ previous sibling| _c_ comment
  _P_ paragraph    | _u_ up parent
  _SPC_ space      | _d_ down child
                   | _e_ end of tree
