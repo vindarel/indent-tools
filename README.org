@@ -1,12 +1,10 @@
 * indent-tools
 
-Indent, de-indent or move around code, based on indentation (python,
-yaml, jade, etc).
+Indent,  move around  and  act  on code  based  on indentation  (yaml,
+python, jade, etc).
 
 Meant for indentation-based  languages, but can be used  any time with
 indented text.
-
-Warning: WIP, horrible and rough implementation, but yet super great !
 
 Example:
 
@@ -64,6 +62,18 @@ with the hydra.
 See also: (de)indenting until the end of the current indentation level
 (i.e., indent every nodes with the same level).
 
+*** Move around
+
+ Move to the *end of the current indentation*,
+
+ to the *next* or the *previous sibling* (a line with the same indentation),
+
+ move  *one parent  up* or  the  first *child  down* (line  with lesser  or
+ greater indentation), much useful for a  large yaml file, but also for
+ code navigation.
+
+ *j* and *k* (with the hydra) as usual go to the next and previous line.
+
 *** Kill, copy, comment, select indentation tree / level / paragraph
 
 See the  hydra. When you choose  an action (kill, copy,  comment), you
@@ -76,18 +86,6 @@ There are the interactive functions too:
  Copying:
 
  : M-x indent-tools-copy-[hydra/body, tree, level, paragraph]
-
-*** Move
-
- Move to the *end of the tree*,
-
- to the *next* or the *previous sibling* (a line with the same indentation),
-
- move  *one parent  up* or  the  first *child  down* (line  with lesser  or
- greater indentation), much useful for a  large yaml file, but also for
- code navigation.
-
- *j* and *k* (with the hydra) as usual go to the next and previous line.
 
 ** Develop
 
