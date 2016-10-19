@@ -268,20 +268,26 @@
   (beginning-of-line-text))
 
 ;;;;;;; copy
-(defun indent-tools-copy-paragraph ()
+(defun indent-tools-copy (what)
   ""
-  (interactive)
   (let ((beg (line-beginning-position))
-        (end (save-excursion
-               (forward-paragraph)
-               (point))))
-    (kill-ring-save beg end)
-    (message "Copied paragraph")))
+          (end (cond
+                 ((equal what "paragraph") (save-excursion
+                                             (forward-paragraph)
+                                             (point)))
+                 ((equal what "tree") (indent-tools-end-of-tree-point))
+                 ((equal what "level") (indent-tools-end-of-level-point))
+                 )))
+     (kill-ring-save beg end)
+     (message (format "Copied %s" what))))
+
 
 (defhydra indent-tools-copy-hydra (:color blue :after-exit (indent-tools-hydra/body))
   "
   "
-  ("p" indent-tools-copy-paragraph "paragraph")
+  (">" (indent-tools-copy "tree") "this indented tree")
+  ("l" (indent-tools-copy "level") "all level")
+  ("p" (indent-tools-copy "paragraph") "paragraph")
   )
 
 
