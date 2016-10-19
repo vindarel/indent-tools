@@ -25,8 +25,8 @@
 ;;; Code:
 
 (require 'ert)
-(load-file "tree-promote.el")
-(require 'tree-promote)
+(load-file "indent-tools.el")
+(require 'indent-tools)
 
 (setq text-quoting-style 'grave)
 (message "Emacs version: %s" emacs-version)
@@ -71,21 +71,21 @@ parent3")
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    1
-   (lambda () (tree-promote-goto-next-sibling))
+   (lambda () (indent-tools-goto-next-sibling))
    8))
 
 (ert-deftest test-previous-sibling ()
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    8
-   (lambda () (tree-promote-goto-previous-sibling))
+   (lambda () (indent-tools-goto-previous-sibling))
    1))
 
 (ert-deftest test-down ()
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    1
-   (lambda () (tree-promote-goto-child))
+   (lambda () (indent-tools-goto-child))
    3
    ))
 
@@ -93,7 +93,7 @@ parent3")
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    1
-   (lambda () (tree-promote-goto-child) (tree-promote-goto-child))
+   (lambda () (indent-tools-goto-child) (indent-tools-goto-child))
    4
    ))
 
@@ -101,14 +101,14 @@ parent3")
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    3
-   (lambda () (tree-promote-goto-parent))
+   (lambda () (indent-tools-goto-parent))
    1))
 
 (ert-deftest test-up-twice ()
   (indent-tree-test-with-buffer
    indent-test-txt-yaml
    4
-   (lambda () (tree-promote-goto-parent) (tree-promote-goto-parent))
+   (lambda () (indent-tools-goto-parent) (indent-tools-goto-parent))
    1))
 
 (provide 'indent-tree-tests)

@@ -1,4 +1,4 @@
-* Tree-promote
+* indent-tools
 
 Indent, de-indent or move around code, based on indentation (python,
 yaml, jade, etc).
@@ -13,7 +13,7 @@ Example:
 #+BEGIN_SRC python
 if True:
     pass
-if False: # <- point on this line, call M-x tree-promote
+if False: # <- point on this line, call M-x indent-tools
     pass
 print
 #+END_SRC
@@ -41,7 +41,7 @@ Shortcut put at =C-c >=.
 To bind this in python-mode:
 #+BEGIN_SRC emacs-lisp
 (add-hook 'python-mode-hook
- (lambda () (define-key python-mode-map (kbd "C-c >") 'tree-promote-hydra/body))
+ (lambda () (define-key python-mode-map (kbd "C-c >") 'indent-tools-hydra/body))
 )
 
 #+END_SRC
@@ -49,16 +49,16 @@ To bind this in python-mode:
 
 *** Indent, de-indent
 
-Indent an  indentation tree: =M-x tree-promote-demote=.   This indents
+Indent an  indentation tree: =M-x indent-tools-demote=.   This indents
 according to  the major  mode (currently specially  supported: python,
 jade,     yaml.     For     other     modes,     it     indents     by
-=tree-promote-indent-offset=, 4 spaces).
+=indent-tools-indent-offset=, 4 spaces).
 
 With the hydra, repeat this action as much as you wish.
 
 Indent by only *one space* (useful for jade-mode): =SPC= key with the hydra.
 
-Indent  the *paragraph*:  =M-x tree-promote-indent-paragraph=,  or =P=
+Indent  the *paragraph*:  =M-x indent-tools-indent-paragraph=,  or =P=
 with the hydra.
 
 See also: (de)indenting until the end of the current indentation level
@@ -71,11 +71,11 @@ are then asked what to operate upon: the indentation tree, level, or paragraph.
 
 There are the interactive functions too:
 
- : M-x tree-promote-kill-[hydra/body, tree, level, paragraph]
+ : M-x indent-tools-kill-[hydra/body, tree, level, paragraph]
 
  Copying:
 
- : M-x tree-promote-copy-[hydra/body, tree, level, paragraph]
+ : M-x indent-tools-copy-[hydra/body, tree, level, paragraph]
 
 *** Move
 
