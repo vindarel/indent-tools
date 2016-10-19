@@ -34,7 +34,7 @@ Clone te repo and evaluate the file (=M-x load-file=).
 
 Just use  the hydra, it shows  all available options and  it allows to
 call an action multiple times in a row:
-: M-x tree-promot-hydra/body
+: M-x indent-tools-hydra/body
 
 Shortcut put at =C-c >=.
 
