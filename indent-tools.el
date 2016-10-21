@@ -6,7 +6,7 @@
 ;; URL: https://gitlab.com/emacs-stuff/indent-promote/
 ;; Version: 0.0.1
 ;; Keywords: indentation, movements
-;; Package-Requires: ((s "0") (hydra "0"))
+;; Package-Requires: ((s "0") (hydra "0") (yafolding "0"))
 
 ;;; Commentary:
 ;;
@@ -16,6 +16,7 @@
 ;; As an answer to https://www.reddit.com/r/emacs/comments/4jb8dj/orgmodelike_promotedemote_tree_for_editing/
 
 (require 'hydra)
+(require 'yafolding)
 
 (defvar indent-tools-node-regexp "\"?[a-zA-Z0-9(\"'-.{]" "A regexp to match the beginning of a yaml node. Should skip comments.") ;; Should be mode specific: skip comments, etc
 ;; (setq indent-tools-node-regexp "\"?[a-zA-Z0-9(\"'-.{]" ) ;; Should be mode specific: skip comments, etc
@@ -325,8 +326,8 @@
  _<_ de-indent    | _k_ ʌ               | _i_ imenu
  _l_ end of level | _n_ next sibling    | _C_ Copy…
  _E_ defun        | _p_ previous sibling| _c_ comment
- _P_ paragraph    | _u_ up parent
- _SPC_ space      | _d_ down child
+ _P_ paragraph    | _u_ up parent       | _f_ fold
+ _SPC_ space      | _d_ down child      | _q_ quit
                   | _e_ end of tree
 "
 
@@ -349,9 +350,9 @@
   ("j" next-line)
   ("k" previous-line)
   ("SPC" indent-tools-indent-space)
-  ("q" nil "quit")
+  ("f" yafolding-toggle-element)
+  ("q" nil)
   )
-
 (defalias 'hydra-indent-tools 'indent-tools-hydra)
 
 

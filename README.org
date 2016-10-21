@@ -74,10 +74,14 @@ See also: (de)indenting until the end of the current indentation level
 
  *j* and *k* (with the hydra) as usual go to the next and previous line.
 
-*** Kill, copy, comment, select indentation tree / level / paragraph
+*** Kill, copy, comment, select, fold
 
-See the  hydra. When you choose  an action (kill, copy,  comment), you
-are then asked what to operate upon: the indentation tree, level, or paragraph.
+See the  hydra.
+
+With some actions (kill, copy, comment), you are asked what to operate
+upon: the indented block, level, or paragraph.
+
+Other actions (toggle fold) act straight away on the indented block.
 
 There are the interactive functions too:
 
