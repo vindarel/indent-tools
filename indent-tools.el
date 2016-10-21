@@ -349,6 +349,7 @@
   ("j" next-line)
   ("k" previous-line)
   ("SPC" indent-tools-indent-space)
+  ("q" nil "quit")
   )
 
 (defalias 'hydra-indent-tools 'indent-tools-hydra)
