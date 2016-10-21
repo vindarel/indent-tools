@@ -223,13 +223,6 @@
         (indentation-level (- (indent-tools--indentation-offset))))
     (indent-rigidly beg end indentation-level)))
 
-(defun indent-tools-interactive ()
-  "Set the indentation yourself with the arrow keys."
-  ;; that's what M-x indent-rigidly without arg does.
-  ;; TO FIX
-  (interactive)
-  (indent-tools t))
-
 (defun indent-tools-comment ()
   (interactive)
   (let ((beg (line-beginning-position))
