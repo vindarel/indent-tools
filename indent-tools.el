@@ -221,16 +221,11 @@
         (indentation-level (- (indent-tools--indentation-offset))))
     (indent-rigidly beg end indentation-level)))
 
-(setq indent-tools--last-beg nil)
-(setq indent-tools--last-end nil)
-
 (defun indent-tools-comment ()
   "Comment the current indentation block."
   (interactive)
   (let ((beg (line-beginning-position))
         (end (indent-tools-end-of-tree-point)))
-    (setq indent-tools--last-beg beg) ;; re-use to uncomment todo:
-    (setq indent-tools--last-end end)
     (comment-region beg end)))
 
 (defun indent-tools-goto-next-sibling ()
