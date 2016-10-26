@@ -343,5 +343,43 @@
   )
 (defalias 'hydra-indent-tools 'indent-tools-hydra)
 
+(defcustom indent-tools-keymap-prefix (kbd "C-c >")
+  "Indent tools keymap prefix."
+  :group 'indent-tools
+  :type 'string)
+
+;;; Minor mode
+;; (defvar indent-tools-command-map
+(defvar indent-tools-command-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd ">") #'indent-tools-indent)
+    (define-key map (kbd "<") #'indent-tools-demote)
+    (define-key map (kbd "n") #'indent-tools-goto-next-sibling)
+    (define-key map (kbd "p") #'indent-tools-goto-previous-sibling)
+    (define-key map (kbd "u") #'indent-tools-goto-parent)
+    (define-key map (kbd "d") #'indent-tools-goto-child)
+    (define-key map (kbd "e") #'indent-tools-goto-end-of-tree)
+    (define-key map (kbd "l") #'indent-tools-end-of-level)
+    map)
+  "Keymap for indent-tools commands.")
+(fset 'indent-tools-command-map indent-tools-command-map)
+
+(defvar indent-tools-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map indent-tools-keymap-prefix 'indent-tools-command-map)
+    map)
+  "Keymap for indent tools mode.")
+
+;;;###Autoload
+(define-minor-mode indent-tools-minor-mode
+  "Navigate, indent and act on blocks delemited by their indentation level.
+
+\\{indent-tools-mode-map}"
+  :global nil
+  :keymap indent-tools-mode-map
+  :group 'indent-tools
+  :require 'indent-tools
+  )
+
 (provide 'indent-tools)
 ;;; indent-tools.el ends here

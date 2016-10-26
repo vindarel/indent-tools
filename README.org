@@ -30,8 +30,11 @@ Clone te repo and evaluate the file (=M-x load-file=).
 
 ** Usage
 
-Just use  the hydra, it shows  all available options and  it allows to
-call an action multiple times in a row:
+You can activate a minor mode or use an [[https://github.com/abo-abo/hydra/][Hydra]].
+
+We  recommand you  to use  the hydra  because it  shows all  available
+options and it allows to call an  action multiple times in a row, with
+a single keypress:
 : M-x indent-tools-hydra/body
 
 To bind the Hydra at =C-c >=:
@@ -44,9 +47,13 @@ To bind this in python-mode:
 (add-hook 'python-mode-hook
  (lambda () (define-key python-mode-map (kbd "C-c >") 'indent-tools-hydra/body))
 )
-
 #+END_SRC
 (=C-c >= originally bound to indent the line).
+
+With the minor mode (=M-x indent-tools-minor-mode=), the prefix key is
+at     =C-c      >=     (you      can     change      the     variable
+=indent-tools-keymap-prefix=).   See   its    keymap   with   =C-h   f
+indent-tools-minor-mode=.
 
 *** Indent, de-indent
 
