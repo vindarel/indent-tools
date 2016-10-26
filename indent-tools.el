@@ -343,7 +343,5 @@
   )
 (defalias 'hydra-indent-tools 'indent-tools-hydra)
 
-(global-set-key (kbd "C-c >") 'indent-tools-hydra/body) ;; in python-mode initially indents the current line only.
-
 (provide 'indent-tools)
 ;;; indent-tools.el ends here

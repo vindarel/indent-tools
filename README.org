@@ -34,7 +34,10 @@ Just use  the hydra, it shows  all available options and  it allows to
 call an action multiple times in a row:
 : M-x indent-tools-hydra/body
 
-Shortcut put at =C-c >=.
+To bind the Hydra at =C-c >=:
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c >") 'indent-tools-hydra/body)
+#+END_SRC
 
 To bind this in python-mode:
 #+BEGIN_SRC emacs-lisp
