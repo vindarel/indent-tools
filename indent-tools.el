@@ -247,8 +247,7 @@
 (defun indent-tools-goto-previous-sibling ()
   "Go to previous sibling."
   (interactive)
-  ;; (beginning-of-line-text)
-  (beginning-of-line)
+  (beginning-of-line-text)
   (or (search-backward-regexp (concat "^"
                                   (indent-tools-current-line-indentation)
                                   ;; "[^\s-]"
