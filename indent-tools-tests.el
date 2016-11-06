@@ -1,8 +1,8 @@
-;;; indent-tree-test.el --- Tests for indent-tree
+;;; indent-tools-test.el --- Tests for indent-tools
 
 ;; Copyright (C) 2016  Free Software Foundation, Inc.
 
-;; Author: matutine
+;; Author: vindarel
 
 ;; This file is part of GNU Emacs.
 
@@ -43,7 +43,7 @@
 
 ;; - ;TODO: test indentation functions.
 
-(defun indent-tree-test-with-buffer (txt start-line func expected-line &optional mode)
+(defun indent-tools-test-with-buffer (txt start-line func expected-line &optional mode)
   "Insert the given txt in a temp buffer, run function and check we're on the good line."
   (with-temp-buffer
     (yaml-mode)
@@ -68,21 +68,21 @@ parent2:
 parent3")
 
 (ert-deftest test-next-sibling ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    1
    (lambda () (indent-tools-goto-next-sibling))
    8))
 
 (ert-deftest test-previous-sibling ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    9
    (lambda () (indent-tools-goto-previous-sibling))
    7))
 
 (ert-deftest test-down ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    1
    (lambda () (indent-tools-goto-child))
@@ -90,7 +90,7 @@ parent3")
    ))
 
 (ert-deftest test-down-twice ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    1
    (lambda () (indent-tools-goto-child) (indent-tools-goto-child))
@@ -98,19 +98,19 @@ parent3")
    ))
 
 (ert-deftest test-up ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    3
    (lambda () (indent-tools-goto-parent))
    1))
 
 (ert-deftest test-up-twice ()
-  (indent-tree-test-with-buffer
+  (indent-tools-test-with-buffer
    indent-test-txt-yaml
    4
    (lambda () (indent-tools-goto-parent) (indent-tools-goto-parent))
    1))
 
-(provide 'indent-tree-tests)
+(provide 'indent-tools-tests)
 
-;;; indent-tree-tests.el ends here
+;;; indent-tools-tests.el ends here
