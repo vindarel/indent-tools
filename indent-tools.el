@@ -74,7 +74,7 @@
                  (string-equal (char-to-string (following-char)) " ")))
       (if (indent-tools--on-last-line)
           (setq last-line-reached t)
-        (forward-line)))
+        (next-line)))
     (unless last-line-reached (forward-line -1))
     (end-of-line)
     ))
