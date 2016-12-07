@@ -14,6 +14,8 @@
 
 ;;; Code:
 
+(require 'indent-tools-current-mode-indentation)
+
 (require 'hydra)
 (require 'yafolding)
 
@@ -38,24 +40,13 @@
     (point)))
 
 (defun indent-tools--indentation-offset ()
-  "Get the current mode's indentation offset.  Return an int (for python, it's usually 4)."
-  (let ((current-mode major-mode))
-    (cond ((and (equal current-mode 'python-mode)
-                (boundp 'python-indent-offset)
-                (numberp python-indent-offset))
-           python-indent-offset)
-
-          ((and (equal current-mode 'jade-mode)
-                (boundp 'jade-tab-width)
-                (numberp jade-tab-width))
-           jade-tab-width)
-
-          ((and (equal current-mode 'yaml-mode)
-                (boundp 'yaml-indent-offset)
-                (numberp yaml-indent-offset))
-           yaml-indent-offset)
-
-          (t indent-tools-indent-offset))))
+  "Get the current mode's indentation offset by calling the function associated to this mode in the alist `indent-tools-current-mode-indentation-modes-alist'. If not found, return the default stored in `indent-tools-indent-offset'.
+Return an int (for python, it's usually 4)."
+  (let ((mode-assoc (assoc major-mode indent-tools-current-mode-indentation-modes-alist)))
+    (if mode-assoc
+        (funcall (cdr mode-assoc))
+      ;; if we don't know this major mode, return a default. ;TODO: search for its indentation level.
+      indent-tools-indent-offset)))
 
 (defun indent-tools--on-last-line ()
   "Return true if we are on the buffer's last line."

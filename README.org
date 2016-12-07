@@ -101,6 +101,12 @@ There are the interactive functions too:
 
  : M-x indent-tools-copy-[hydra/body, tree, level, paragraph]
 
+** Configure
+
+See the  variable =indent-tools-current-mode-indentation-modes-alist=.
+It is an alist which associates a mode to a function which returns the
+desired indentation level (an int).
+
 ** Develop
 
 To run the unit tests, go into the tests file and run *ert*:
