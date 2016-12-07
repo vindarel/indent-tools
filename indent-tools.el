@@ -304,7 +304,6 @@
   )
 
 ;;;;;; General hydra
-;;;###autoload
 (defhydra indent-tools-hydra (:color red :hint nil)
   "
  ^Indent^         | ^Navigation^        | ^Actions^
@@ -348,7 +347,6 @@
   :type 'string)
 
 ;;; Minor mode
-;; (defvar indent-tools-command-map
 (defvar indent-tools-command-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd ">") #'indent-tools-indent)
