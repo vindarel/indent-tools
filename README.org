@@ -6,7 +6,19 @@ python, jade, etc).
 Meant for indentation-based  languages, but can be used  any time with
 indented text.
 
-Example:
+_Example:_
+
+Navigating by blocks:
+
+#+BEGIN_SRC yaml
+parent:       # <- point on this line, call M-x indent-tools-goto-next-sibling or C-c > n
+  - child
+  - lots and lots of items
+next-parent:  # <- you go there.
+  - child
+#+END_SRC
+
+Indenting:
 
 #+BEGIN_SRC python
 if True:
