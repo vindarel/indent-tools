@@ -77,9 +77,9 @@ parent3")
 (ert-deftest test-previous-sibling ()
   (indent-tools-test-with-buffer
    indent-test-txt-yaml
-   9
+   5
    (lambda () (indent-tools-goto-previous-sibling))
-   7))
+   3))
 
 (ert-deftest test-down ()
   (indent-tools-test-with-buffer

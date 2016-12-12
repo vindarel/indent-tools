@@ -236,15 +236,16 @@ Return an int (for python, it's usually 4)."
 (defun indent-tools-goto-previous-sibling ()
   "Go to previous sibling."
   (interactive)
-  (beginning-of-line-text)
-  (or (search-backward-regexp (concat "^"
-                                  (indent-tools-current-line-indentation)
-                                  ;; "[^\s-]"
-                                  indent-tools-node-regexp)
-                          nil
-                          t)
-      (message "We didn't find a previous sibling."))
-  (beginning-of-line-text))
+  (let ((current-line-indentation (indent-tools-current-line-indentation)))
+    (beginning-of-line)
+    (or (search-backward-regexp (concat "^"
+                                        (current-line-indentation)
+                                        ;; "[^\s-]"
+                                        indent-tools-node-regexp)
+                                nil
+                                t)
+        (message "We didn't find a previous sibling."))
+    (beginning-of-line-text)))
 
 ;;;;;;; copy
 (defun indent-tools-copy (what)
