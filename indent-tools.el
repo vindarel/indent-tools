@@ -21,8 +21,6 @@
 
 (defvar indent-tools-node-regexp "\"?[a-zA-Z0-9(\"'-.{]" "A regexp to match the beginning of a yaml node.  Should skip comments.") ;; Should be mode specific: skip comments, etc
 
-(defvar indent-tools-indent-offset 4 "Default indentation offset, when a mode isnt recognized.")
-
 (defun indent-tools-current-line-indentation ()
   "Return a string containing the spaces that make up the current line's indentation."
   (save-excursion
@@ -40,13 +38,13 @@
     (point)))
 
 (defun indent-tools--indentation-offset ()
-  "Get the current mode's indentation offset by calling the function associated to this mode in the alist `indent-tools-current-mode-indentation-modes-alist'. If not found, return the default stored in `indent-tools-indent-offset'.
+  "Get the current mode's indentation offset by calling the function associated to this mode in the alist `indent-tools-current-mode-indentation-modes-alist'. If not found, return the default `standard-indent'.
 Return an int (for python, it's usually 4)."
   (let ((mode-assoc (assoc major-mode indent-tools-current-mode-indentation-modes-alist)))
     (if mode-assoc
         (funcall (cdr mode-assoc))
       ;; if we don't know this major mode, return a default. ;TODO: search for its indentation level.
-      indent-tools-indent-offset)))
+      standard-indent)))
 
 (defun indent-tools--on-last-line ()
   "Return true if we are on the buffer's last line."
