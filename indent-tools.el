@@ -14,7 +14,7 @@
 
 ;;; Code:
 
-(require 'indent-tools-current-mode-indentation)
+(require 'indent-tools-indentation-of)
 
 (require 'hydra)
 (require 'yafolding)
@@ -36,15 +36,6 @@
   (save-excursion
     (indent-tools-goto-end-of-tree)
     (point)))
-
-(defun indent-tools--indentation-offset ()
-  "Get the current mode's indentation offset by calling the function associated to this mode in the alist `indent-tools-current-mode-indentation-modes-alist'. If not found, return the default `standard-indent'.
-Return an int (for python, it's usually 4)."
-  (let ((mode-assoc (assoc major-mode indent-tools-current-mode-indentation-modes-alist)))
-    (if mode-assoc
-        (funcall (cdr mode-assoc))
-      ;; if we don't know this major mode, return a default. ;TODO: search for its indentation level.
-      standard-indent)))
 
 (defun indent-tools--on-last-line ()
   "Return true if we are on the buffer's last line."
@@ -76,7 +67,7 @@ Return an int (for python, it's usually 4)."
       (progn
         (if (search-backward-regexp (concat "^"
                                             (s-left (- (length (indent-tools-current-line-indentation))
-                                                       (indent-tools--indentation-offset))
+                                                       (indent-tools-indentation-of-current-mode))
                                                     (indent-tools-current-line-indentation))
                                             indent-tools-node-regexp)
                                     nil t)
@@ -90,7 +81,7 @@ Return an int (for python, it's usually 4)."
   (beginning-of-line-text)
   (unless (search-forward-regexp (concat "^"
                                      (indent-tools-current-line-indentation)
-                                     (s-repeat (indent-tools--indentation-offset) " ")
+                                     (s-repeat (indent-tools-indentation-of-current-mode) " ")
                                      indent-tools-node-regexp)
                              nil
                              t)
@@ -139,7 +130,7 @@ Return an int (for python, it's usually 4)."
   (interactive)
   (let ((beg (line-beginning-position))
         (end (indent-tools-end-of-level-point))
-        (offset (indent-tools--indentation-offset)))
+        (offset (indent-tools-indentation-of-current-mode)))
     (indent-rigidly beg end offset)))
 
 (defun indent-tools-select ()
@@ -163,7 +154,7 @@ Return an int (for python, it's usually 4)."
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
           (end (indent-tools-end-of-tree-point))
-          (indentation-level (indent-tools--indentation-offset)))
+          (indentation-level (indent-tools-indentation-of-current-mode)))
     (if select
             (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
             (indent-rigidly beg end indentation-level))))
@@ -175,7 +166,7 @@ Return an int (for python, it's usually 4)."
         (end (save-excursion
                (forward-paragraph)
                (point))))
-    (indent-rigidly beg end (indent-tools--indentation-offset))))
+    (indent-rigidly beg end (indent-tools-indentation-of-current-mode))))
 
 (defun indent-tools-indent-end-of-defun ()
   "Indent until the end of the current defun."
@@ -184,7 +175,7 @@ Return an int (for python, it's usually 4)."
         (end (save-excursion
                (end-of-defun)
                (point)))
-        (indentation-level (indent-tools--indentation-offset)))
+        (indentation-level (indent-tools-indentation-of-current-mode)))
     (if (equal beg end)
         ;; case we're at the last defun or in __main__, not a defun.
         (setq end (point-max)))
@@ -196,7 +187,7 @@ Return an int (for python, it's usually 4)."
   (interactive)
   (let ((beg (line-beginning-position))
         (end (indent-tools-end-of-tree-point))
-        (indentation-level (indent-tools--indentation-offset)))
+        (indentation-level (indent-tools-indentation-of-current-mode)))
     (save-excursion
       (replace-regexp "^" " " nil beg end))))
 
@@ -207,7 +198,7 @@ Return an int (for python, it's usually 4)."
   (let ((beg (save-excursion
                (beginning-of-line) (point)))
         (end (indent-tools-end-of-tree-point))
-        (indentation-level (- (indent-tools--indentation-offset))))
+        (indentation-level (- (indent-tools-indentation-of-current-mode))))
     (indent-rigidly beg end indentation-level)))
 
 (defun indent-tools-comment ()

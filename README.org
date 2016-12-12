@@ -111,9 +111,31 @@ There are the interactive functions too:
 
 ** Configure
 
-See the  variable =indent-tools-current-mode-indentation-modes-alist=.
-It is an alist which associates a mode to a function which returns the
-desired indentation level (an int).
+To   know  the   indentation   of  the   current   major  mode,   call
+=indent-tools-indentation-of-current-mode=.
+
+If   it   doesn't   know   the  current   mode,   see   the   variable
+=indent-tools-indentation-of-modes-alist=.   It  is   an  alist  which
+associates a mode to a  function which returns the desired indentation
+level (an int).
+
+Example:
+
+#+BEGIN_SRC emacs-lisp
+(defun indent-tools-indentation-of-python ()
+  "Return Python's current indentation as an int, usually 4."
+  (cond ((and (boundp 'python-indent-offset)
+              (numberp python-indent-offset))
+         python-indent-offset)))
+
+;; The alist.
+(setq indent-tools-indentation-of-modes-alist
+      '(
+        (python-mode . indent-tools-indentation-of-python)
+        (yaml-mode . indent-tools-indentation-of-yaml)
+        (jade-mode . indent-tools-indentation-of-jade)
+       ))
+#+END_SRC
 
 ** Develop
 
