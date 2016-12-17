@@ -46,6 +46,6 @@ Return an int (for python, it's usually 4)."
       standard-indent)))
 
 
-(provide 'indent-tools-indentation)
+(provide 'indent-tools-indentation-of)
 
 ;;; indent-tools-indentation-of ends here.
