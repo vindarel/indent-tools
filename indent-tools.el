@@ -1,4 +1,4 @@
-;;; indent-tools.el --- Indent, move around etc by indentation units.
+;;; indent-tools.el --- Indent, navigate (and more) by blocks of indentation: yaml, python etc.
 
 ;; Copyright (C) 2016  wtf public licence
 

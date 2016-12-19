@@ -1,5 +1,7 @@
 * indent-tools
 
+[[https://melpa.org/#/indent-tools][file:https://melpa.org/packages/indent-tools-badge.svg]]
+
 Indent,  move around  and  act  on code  based  on indentation  (yaml,
 python, jade, etc).
 
@@ -34,7 +36,7 @@ print
 
 ** Installation
 
-Clone te repo and evaluate the file (=M-x load-file=).
+Set up [[http://wikemacs.org/wiki/Package.el][MELPA]] and use [[http://wikemacs.org/wiki/Package.el][package.el]]: =M-x package-install RET indent-tools RET=.
 
 ** Usage
 
