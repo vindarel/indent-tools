@@ -16,23 +16,11 @@ Navigating by blocks:
  <img src="https://gitlab.com/emacs-stuff/indent-tools/raw/master/demo.gif" </img>
 #+END_HTML
 
-Indenting:
+_Indenting_:
 
-#+BEGIN_SRC python
-if True:
-    pass
-if False: # <- point on this line, call M-x indent-tools
-    pass
-print
-#+END_SRC
-you get
-#+BEGIN_SRC python
-if True:
-    pass
-    if False: # <- indented
-        pass
-print
-#+END_SRC
+#+BEGIN_HTML
+ <img src="https://gitlab.com/emacs-stuff/indent-tools/raw/master/demo-indent.gif" </img>
+#+END_HTML
 
 ** Installation
 
