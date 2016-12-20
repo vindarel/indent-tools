@@ -230,7 +230,7 @@
   (let ((current-line-indentation (indent-tools-current-line-indentation)))
     (beginning-of-line)
     (or (search-backward-regexp (concat "^"
-                                        (current-line-indentation)
+                                        current-line-indentation
                                         ;; "[^\s-]"
                                         indent-tools-node-regexp)
                                 nil
