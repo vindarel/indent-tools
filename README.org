@@ -37,6 +37,7 @@ a single keypress:
 
 To bind the Hydra at =C-c >=:
 #+BEGIN_SRC emacs-lisp
+(require 'indent-tools)
 (global-set-key (kbd "C-c >") 'indent-tools-hydra/body)
 #+END_SRC
 
