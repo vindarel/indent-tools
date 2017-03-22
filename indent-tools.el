@@ -208,6 +208,15 @@
         (end (indent-tools-end-of-tree-point)))
     (comment-region beg end)))
 
+(defun indent-tools-uncomment ()
+  "Uncomment the paragraph. Easier, since the comments hide us the indentation levels."
+  (interactive)
+  (let ((beg (line-beginning-position))
+        (end (save-excursion
+               (forward-paragraph)
+               (point))))
+    (uncomment-region beg end)))
+
 (defun indent-tools-goto-next-sibling ()
   "Go to the next element of the same level."
   (interactive)
@@ -293,15 +302,16 @@
  _<_ de-indent    | _k_ ʌ               | _i_ imenu
  _l_ end of level | _n_ next sibling    | _C_ Copy…
  _E_ defun        | _p_ previous sibling| _c_ comment
- _P_ paragraph    | _u_ up parent       | _f_ fold
- _SPC_ space      | _d_ down child      | _q_ quit
-                  | _e_ end of tree
+ _P_ paragraph    | _u_ up parent       | _U_ uncomment (paragraph)
+ _SPC_ space      | _d_ down child      | _f_ fold
+                  | _e_ end of tree     | _q_ quit
 "
 
   (">" indent-tools-indent)
   ("<" indent-tools-demote)
   ("E" indent-tools-indent-end-of-defun)
   ("c" indent-tools-comment)
+  ("U" indent-tools-uncomment)
   ("P" indent-tools-indent-paragraph)
   ("l" indent-tools-indent-end-of-level)
   ("K" indent-tools-kill-hydra/body :color blue)

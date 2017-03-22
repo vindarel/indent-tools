@@ -83,22 +83,33 @@ See also: (de)indenting until the end of the current indentation level
 
  *j* and *k* (with the hydra) as usual go to the next and previous line.
 
-*** Kill, copy, comment, select, fold
+*** Kill, copy, (un)comment, select, fold
 
 See the  hydra.
 
-With some actions (kill, copy, comment), you are asked what to operate
-upon: the indented block, level, or paragraph.
+Some actions (kill, copy, comment) will  ask you again what to operate
+upon: the indented block, the whole level, or the paragraph.
 
 Other actions (toggle fold) act straight away on the indented block.
 
-There are the interactive functions too:
+So one can:
+
+- kill something
+- copy
+- comment
+- uncomment (only a paragraph)
+- toggle the fold (of the current indentation)
+- call imenu to go to another function definition, keeping the hydra.
+
+
+There are interactive functions too:
 
  : M-x indent-tools-kill-[hydra/body, tree, level, paragraph]
 
  Copying:
 
  : M-x indent-tools-copy-[hydra/body, tree, level, paragraph]
+
 
 ** Configure
 
@@ -152,4 +163,8 @@ just used the Hydra feature.
 
 See `move-text` in melpa to move regions up and down.
 
-See how [[https://github.com/zenozeng/yafolding.el/blob/master/yafolding.el][yafolding]] did.
+[X] See how [[https://github.com/zenozeng/yafolding.el/blob/master/yafolding.el][yafolding]] did.
+
+** Change logs
+
+- <2017-03-22 mer.> added Uncomment the paragraph
