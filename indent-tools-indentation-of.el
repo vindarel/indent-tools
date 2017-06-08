@@ -28,12 +28,19 @@
               (numberp jade-tab-width))
          jade-tab-width)))
 
+(defun indent-tools-indentation-of-web-mode-code ()
+  "In web-mode, indentation of code."
+  (cond ((and (boundp 'web-mode-code-indent-offset)
+              (numberp web-mode-code-indent-offset))
+         web-mode-code-indent-offset)))
+
 ;; The alist.
 (setq indent-tools-indentation-of-modes-alist
       '(
         (python-mode . indent-tools-indentation-of-python)
         (yaml-mode . indent-tools-indentation-of-yaml)
         (jade-mode . indent-tools-indentation-of-jade)
+        (web-mode . indent-tools-indentation-of-web-mode-code)
        ))
 
 (defun indent-tools-indentation-of-current-mode ()
