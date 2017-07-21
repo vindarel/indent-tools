@@ -308,7 +308,7 @@
  _E_ end of fn    | _p_ previous sibling| _c_ comment
  _P_ paragraph    | _u_ up parent       | _U_ uncomment (paragraph)
  _SPC_ space      | _d_ down child      | _f_ fold
-                  | _e_ end of tree     | _q_ quit
+ ___ undo         | _e_ end of tree     | _q_ quit
 "
 
   (">" indent-tools-indent)
@@ -331,6 +331,7 @@
   ("j" forward-line)
   ("k" previous-line)
   ("SPC" indent-tools-indent-space)
+  ("_" undo-tree-undo)
   ("f" yafolding-toggle-element)
   ("q" nil)
   )

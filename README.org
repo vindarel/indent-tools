@@ -111,6 +111,11 @@ There are interactive functions too:
  : M-x indent-tools-copy-[hydra/body, tree, level, paragraph]
 
 
+*** Undo
+
+The hydra  binds =_= to =undo-tree-undo=,  so we can try  commands and
+undo anything by staying inside it.
+
 ** Configure
 
 To   know  the   indentation   of  the   current   major  mode,   call
