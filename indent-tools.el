@@ -149,15 +149,19 @@
 (defun indent-tools-indent (&optional select)
   "Indent the current tree.
 
+   The point can be anywhere on the line, it goes to the first
+   non-blank character before action.
+
    SELECT: boolean (deprecated) in favor of hydra's feature."
     (interactive)
+    (beginning-of-line-text)
     (let ((beg (save-excursion
                 (beginning-of-line) (point)))
           (end (indent-tools-end-of-tree-point))
           (indentation-level (indent-tools-indentation-of-current-mode)))
     (if select
-            (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
-            (indent-rigidly beg end indentation-level))))
+        (call-interactively 'indent-rigidly t (vector beg end)) ;; hey… hydras do the job of repetition !
+      (indent-rigidly beg end indentation-level))))
 
 (defun indent-tools-indent-paragraph ()
   "Indent the current paragraph, for exple the block of text until a new line.  The paragraph is the one you would jump with `forward-paragraph'."
