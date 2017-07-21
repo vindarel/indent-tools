@@ -169,7 +169,7 @@
     (indent-rigidly beg end (indent-tools-indentation-of-current-mode))))
 
 (defun indent-tools-indent-end-of-defun ()
-  "Indent until the end of the current defun."
+  "Indent until the end of the current function."
   (interactive)
   (let ((beg (line-beginning-position))
         (end (save-excursion
@@ -301,7 +301,7 @@
  _>_ indent       | _j_ v               | _K_ kill
  _<_ de-indent    | _k_ ʌ               | _i_ imenu
  _l_ end of level | _n_ next sibling    | _C_ Copy…
- _E_ defun        | _p_ previous sibling| _c_ comment
+ _E_ end of fn    | _p_ previous sibling| _c_ comment
  _P_ paragraph    | _u_ up parent       | _U_ uncomment (paragraph)
  _SPC_ space      | _d_ down child      | _f_ fold
                   | _e_ end of tree     | _q_ quit

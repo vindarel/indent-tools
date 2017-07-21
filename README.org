@@ -165,6 +165,6 @@ See `move-text` in melpa to move regions up and down.
 
 [X] See how [[https://github.com/zenozeng/yafolding.el/blob/master/yafolding.el][yafolding]] did.
 
-** Change logs
+** Change log
 
 - <2017-03-22 mer.> added Uncomment the paragraph
