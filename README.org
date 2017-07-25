@@ -176,4 +176,6 @@ See `move-text` in melpa to move regions up and down.
 
 ** Change log
 
+- <2017-07-21 ven.> undo-tree within the hydra (press "_")
+- <2017-07-21 ven.> small  fix for ">" indent: go to  the beginning of text before action.
 - <2017-03-22 mer.> added Uncomment the paragraph
