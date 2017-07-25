@@ -9,6 +9,9 @@
 
 (defvar indent-tools-indentation-of-modes-alist '() "Given a mode, associate a function that gives this mode's indentation.")
 
+(defvar indent-tools-indentation-offset standard-indent
+  "Indentation level to use (spaces) by default when no is found for the current mode. Defaults to 'standard-indent`.")
+
 ;; A function for every mode.
 (defun indent-tools-indentation-of-python ()
   "Return Python's current indentation as an int, usually 4."
@@ -50,7 +53,7 @@ Return an int (for python, it's usually 4)."
     (if mode-assoc
         (funcall (cdr mode-assoc))
       ;; if we don't know this major mode, return a default.
-      standard-indent)))
+      indent-tools-indentation-offset)))
 
 
 (provide 'indent-tools-indentation-of)

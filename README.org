@@ -126,6 +126,10 @@ If   it   doesn't   know   the  current   mode,   see   the   variable
 associates a mode to a  function which returns the desired indentation
 level (an int).
 
+If   no  indentation   level  is   known  for   this  mode,   it  uses
+=indent-tools-indentation-offset=,    which    defaults   to    Emacs'
+=standard-indent=.
+
 Example:
 
 #+BEGIN_SRC emacs-lisp
