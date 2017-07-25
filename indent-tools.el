@@ -15,6 +15,7 @@
 ;;; Code:
 
 (require 'indent-tools-indentation-of)
+(require 'indent-tools-node-regexp-of)
 
 (require 'hydra)
 (require 'yafolding)
@@ -69,7 +70,7 @@
                                             (s-left (- (length (indent-tools-current-line-indentation))
                                                        (indent-tools-indentation-of-current-mode))
                                                     (indent-tools-current-line-indentation))
-                                            indent-tools-node-regexp)
+                                            (indent-tools-node-regexp-of-current-mode))
                                     nil t)
             (beginning-of-line-text)
           (message "you don't have more parents")))
@@ -82,7 +83,7 @@
   (unless (search-forward-regexp (concat "^"
                                      (indent-tools-current-line-indentation)
                                      (s-repeat (indent-tools-indentation-of-current-mode) " ")
-                                     indent-tools-node-regexp)
+                                     (indent-tools-node-regexp-of-current-mode))
                              nil
                              t)
     (message "you don't have more children."))
@@ -226,7 +227,7 @@
   "Go to the next element of the same level."
   (interactive)
   (end-of-line)
-  (let ((yaml-regexp indent-tools-node-regexp))
+  (let ((yaml-regexp (indent-tools-node-regexp-of-current-mode)))
     ;; (setq yaml-element-regexp ".*") ;; should not start by a comment
     (or (search-forward-regexp (concat "^"
                                        (indent-tools-current-line-indentation)
@@ -246,7 +247,7 @@
     (or (search-backward-regexp (concat "^"
                                         current-line-indentation
                                         ;; "[^\s-]"
-                                        indent-tools-node-regexp)
+                                        (indent-tools-node-regexp-of-current-mode))
                                 nil
                                 t)
         (message "We didn't find a previous sibling."))

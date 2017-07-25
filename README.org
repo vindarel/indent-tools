@@ -118,6 +118,8 @@ undo anything by staying inside it.
 
 ** Configure
 
+*** Indentation level
+
 To   know  the   indentation   of  the   current   major  mode,   call
 =indent-tools-indentation-of-current-mode=.
 
@@ -147,6 +149,18 @@ Example:
         (jade-mode . indent-tools-indentation-of-jade)
        ))
 #+END_SRC
+
+*** Recognizing the interesting lines
+
+We  don't want  to consider  all lines  equally. We  may want  to jump
+comments or  to not stop  at lines that  are at the  right indentation
+level but that are not the beginning of a code node.
+
+That's  why  we  define  a  regexp  by  major  mode.  The  default  is
+=indent-tools-node-regexp-default=.
+
+Be aware that  in non-strict indentation-based languages,  this is not
+the ideal navigation method.
 
 ** Develop
 
