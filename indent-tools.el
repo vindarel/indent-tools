@@ -208,6 +208,7 @@
 (defun indent-tools-comment ()
   "Comment the current indentation block."
   (interactive)
+  (beginning-of-line-text)
   (let ((beg (line-beginning-position))
         (end (indent-tools-end-of-tree-point)))
     (comment-region beg end)))
