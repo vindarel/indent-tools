@@ -278,6 +278,7 @@
 (defun indent-tools-kill-tree ()
   "Delete the current indentated tree."
   (interactive)
+  (beginning-of-line-text)
   (let ((beg (save-excursion
                (beginning-of-line-text)
                (point)))
@@ -287,6 +288,7 @@
 (defun indent-tools-kill-level ()
   "Kill the current indentated block."
   (interactive)
+  (beginning-of-line-text)
   (let ((beg (line-beginning-position))
         (end (indent-tools-end-of-tree-point)))
     (kill-region beg end)))
