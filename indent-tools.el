@@ -335,6 +335,7 @@
   ("k" previous-line)
   ("SPC" indent-tools-indent-space)
   ("_" undo-tree-undo)
+  ("L" recenter-top-bottom)
   ("f" yafolding-toggle-element)
   ("q" nil)
   )

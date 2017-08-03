@@ -83,6 +83,13 @@ See also: (de)indenting until the end of the current indentation level
 
  *j* and *k* (with the hydra) as usual go to the next and previous line.
 
+*** Recenter screen (L)
+
+While you  move around, you may  want to recenter the  screen, what we
+usually do with =C-l= ("recenter-top-bottom"). We can not bind control
+keys into hydras,  so this is bound to =L=.  Successive calls will put
+the point in the middle, at the top or at the bottom of the screen.
+
 *** Kill, copy, (un)comment, select, fold
 
 See the  hydra.
@@ -176,6 +183,7 @@ See `move-text` in melpa to move regions up and down.
 
 ** Change log
 
+- <2017-08-03 jeu.> =L= insteal of =C-l= to recenter the screen ("recenter-top-bottom").
 - <2017-07-21 ven.> undo-tree within the hydra (press "_")
 - <2017-07-21 ven.> small  fix for ">" indent: go to  the beginning of text before action.
 - <2017-03-22 mer.> added Uncomment the paragraph
