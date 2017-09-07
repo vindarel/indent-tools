@@ -241,6 +241,7 @@
 (defun indent-tools-goto-previous-sibling ()
   "Go to previous sibling."
   (interactive)
+  (beginning-of-line-text)
   (let ((current-line-indentation (indent-tools-current-line-indentation)))
     (beginning-of-line)
     (or (search-backward-regexp (concat "^"
