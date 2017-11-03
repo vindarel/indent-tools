@@ -181,6 +181,10 @@ See `move-text` in melpa to move regions up and down.
 
 [X] See how [[https://github.com/zenozeng/yafolding.el/blob/master/yafolding.el][yafolding]] did.
 
+** See also
+- [[http://wikemacs.org/wiki/Json#json-navigator_-_navigate_json_presented_as_a_tree][json-navigator]] - to display any JSON document as a tree,
+  which leafs  you can unfold  and follow.  (Emacs 25.1) Based  on the
+  more generic [[https://github.com/DamienCassou/hierarchy][hierarchy]].
 ** Change log
 
 - <2017-08-03 jeu.> =L= insteal of =C-l= to recenter the screen ("recenter-top-bottom").
