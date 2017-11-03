@@ -214,13 +214,15 @@
     (comment-region beg end)))
 
 (defun indent-tools-uncomment ()
-  "Uncomment the paragraph. Easier, since the comments hide us the indentation levels."
+  "Uncomment the paragraph and go to its end, in case we want to carry on un-commeting.
+Simple stuff, since the comments hide us the indentation levels."
   (interactive)
   (let ((beg (line-beginning-position))
         (end (save-excursion
                (forward-paragraph)
                (point))))
-    (uncomment-region beg end)))
+    (uncomment-region beg end)
+    (goto-char end)))
 
 (defun indent-tools-goto-next-sibling ()
   "Go to the next element of the same level."
