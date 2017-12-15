@@ -25,6 +25,11 @@
               (numberp yaml-indent-offset))
          yaml-indent-offset)))
 
+(defun indent-tools-indentation-of-json ()
+  "Rutern JSon's current indentation as an int."
+  (if (boundp 'json-encoding-default-indentation)
+    (length json-encoding-default-indentation)))
+
 (defun indent-tools-indentation-of-jade ()
   "Return Jade's current indentation as an int."
   (cond ((and (boundp 'jade-tab-width)
@@ -44,6 +49,7 @@
         (yaml-mode . indent-tools-indentation-of-yaml)
         (jade-mode . indent-tools-indentation-of-jade)
         (web-mode . indent-tools-indentation-of-web-mode-code)
+        (json-mode . indent-tools-indentation-of-json)
        ))
 
 (defun indent-tools-indentation-of-current-mode ()
