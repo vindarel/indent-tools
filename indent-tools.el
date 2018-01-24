@@ -279,7 +279,7 @@ Simple stuff, since the comments hide us the indentation levels."
 
 ;;;;;;; kill
 (defun indent-tools-kill-tree ()
-  "Delete the current indentated tree."
+  "Delete the indentatation block at point."
   (interactive)
   (beginning-of-line-text)
   (let ((beg (save-excursion
@@ -288,20 +288,6 @@ Simple stuff, since the comments hide us the indentation levels."
         (end (indent-tools-end-of-tree-point)))
     (kill-region beg end)))
 
-(defun indent-tools-kill-level ()
-  "Kill the current indentated block."
-  (interactive)
-  (beginning-of-line-text)
-  (let ((beg (line-beginning-position))
-        (end (indent-tools-end-of-tree-point)))
-    (kill-region beg end)))
-
-(defhydra indent-tools-kill-hydra (:color blue :after-exit (indent-tools-hydra/body))
-  "Mini hydra for kill choices.  Calls the big hydra on exit."
-  (">" indent-tools-kill-tree "indentation tree")
-  ("p" kill-paragraph "paragraph")
-  ("l" indent-tools-kill-level "level")
-  )
 
 ;;;;;; General hydra
 (defhydra indent-tools-hydra (:color red :hint nil)
@@ -324,7 +310,7 @@ Simple stuff, since the comments hide us the indentation levels."
   ("U" indent-tools-uncomment)
   ("P" indent-tools-indent-paragraph)
   ("l" indent-tools-indent-end-of-level)
-  ("K" indent-tools-kill-hydra/body :color blue)
+  ("K" indent-tools-kill-tree)
   ("C" indent-tools-copy-hydra/body :color blue)
   ("s" indent-tools-select)
   ("e" indent-tools-goto-end-of-tree)

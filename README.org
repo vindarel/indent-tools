@@ -187,6 +187,9 @@ See `move-text` in melpa to move regions up and down.
   more generic [[https://github.com/DamienCassou/hierarchy][hierarchy]].
 ** Change log
 
+- <2018-01-24 mer.> simplify  =Kill=: it kills the  indented block, no
+  more choice  to kill a  paragraph or all the  level in a  hydra, not
+  fitting in this package.
 - <2017-08-03 jeu.> =L= insteal of =C-l= to recenter the screen ("recenter-top-bottom").
 - <2017-07-21 ven.> undo-tree within the hydra (press "_")
 - <2017-07-21 ven.> small  fix for ">" indent: go to  the beginning of text before action.
