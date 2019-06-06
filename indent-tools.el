@@ -1,8 +1,8 @@
 ;;; indent-tools.el --- Indent, navigate (and more) by blocks of indentation: yaml, python etc.
 
-;; Copyright (C) 2016  wtf public licence
+;; Copyright (C) 2016-2019  wtf public licence
 
-;; Author: vindarel <ehvince@mailz.org>
+;; Author: vindarel <vindarel@mailz.org>
 ;; URL: https://gitlab.com/emacs-stuff/indent-tools/
 ;; Version: 0.1
 ;; Keywords: indentation, movements, navigation, kill, fold, yaml, python
