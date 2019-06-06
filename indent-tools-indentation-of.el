@@ -1,8 +1,8 @@
 ;;; indent-tools.el --- Indent, move around etc by indentation units.
 
-;; Copyright (C) 2016  wtf public licence
+;; Copyright (C) 2016-2019  wtf public licence
 
-;; Author: vindarel <ehvince@mailz.org>
+;; Author: vindarel <vindarel@mailz.org>
 ;; URL: https://gitlab.com/emacs-stuff/indent-tools/
 
 ;; What is the indentation level of the current mode ?
