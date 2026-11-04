@@ -1,4 +1,4 @@
-;;; indent-tools.el --- Indent, move around etc by indentation units.
+;;; indent-tools.el --- Indent, move around etc by indentation units. -*-lexical-binding: t; -*-
 
 ;; Copyright (C) 2016-2019  wtf public licence
 
@@ -7,10 +7,13 @@
 
 ;; What is the indentation level of the current mode ?
 
-(defvar indent-tools-indentation-of-modes-alist '() "Given a mode, associate a function that gives this mode's indentation.")
+(defvar indent-tools-indentation-of-modes-alist '()
+  "Given a mode, associate a function that gives this mode's indentation.")
 
 (defvar indent-tools-indentation-offset standard-indent
-  "Indentation level to use (spaces) by default when no is found for the current mode. Defaults to 'standard-indent`.")
+  "Indentation level to use (spaces) by default.
+Used when none is found for the current mode.
+Defaults to \\='standard-indent.")
 
 ;; A function for every mode.
 (defun indent-tools-indentation-of-python ()
@@ -53,8 +56,11 @@
        ))
 
 (defun indent-tools-indentation-of-current-mode ()
-  "Get the current mode's indentation offset by calling the function associated to this mode in the alist `indent-tools-indentation-of-modes-alist'. If not found, return the default `standard-indent'.
-Return an int (for python, it's usually 4)."
+  "Get the current mode's indentation offset.
+
+Identify it by calling the function associated to this mode in the alist
+`indent-tools-indentation-of-modes-alist'. If not found, return the
+default `standard-indent'.  Return an int (for python, it's usually 4)."
   (let ((mode-assoc (assoc major-mode indent-tools-indentation-of-modes-alist)))
     (if mode-assoc
         (funcall (cdr mode-assoc))
